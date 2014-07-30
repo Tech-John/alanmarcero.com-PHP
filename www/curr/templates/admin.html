@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+
+<title>--- Alan Marcero  &middot;  Web Developer  &middot;  Music Producer ---</title>
+
+<link rel="stylesheet" href="css/main.css" media="screen" type="text/css" />
+</head>
+
+<body>
+<div id="banner"></div> <!-- end banner -->
+
+<div id="nav">
+	<div id="navContent">
+		<ul>
+			<li><a href="http://www.alanmarcero.com">Sound Design</li>
+			<li><a href="http://www.alanmarcero.com/customers.php">Customer's Section</li>
+			<li><a href="http://www.myspace.com/AlanMarcero">MySpace</a></li>
+			{if $session_email}<li style="text-align:right"><a href="http://www.alanmarcero.com/logout.php" />Logout</a></li>{/if}
+		</ul>
+	</div>
+</div>		
+	
+<div id="sectionHeading">
+	<div id="sectionHeadingText">
+		<div id="cart">
+		</div>
+		<div id="loggedIn">
+			{if $session_email}Logged in with email: {$session_email}{/if}
+		</div>
+	</div>
+</div>
+
+<div id="sectionContent">
+	<div id="sectionContentText">
+		{$content}
+    <div id="footer">
+		<p style="margin:0px;">
+			All Content &copy; 2009 Alan Marcero 
+		</p>
+    </div>
+	</div><!-- end sectionContentText -->
+</div> <!-- end sectionContent -->
+</body>
+
+</html>

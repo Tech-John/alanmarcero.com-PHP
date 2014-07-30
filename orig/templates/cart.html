@@ -1,0 +1,63 @@
+{if count($cart) > 0}
+	<table border="0" cellpadding="20px">
+		{foreach from=$cart item=item}
+			<tr>
+				<td><a href="http://www.alanmarcero.com">{$item.name}</td>
+				
+				<td>
+					<form action="index.php" method="GET">
+						<input type="hidden" name="item_id" value="{$item.id}" />
+						<input type="hidden" name="add_to_cart" value="true" />
+						
+						{if $item.price == 0.00}	
+							$<input type="text" name="price" value="25.00" class="textField" size="3" />
+						{else}
+							$<input type="text" name="price" value="{$item.price}" class="textField" size="3" />
+						{/if}
+						<input type="submit" class="buttonSubmit" value="Update Price" />
+					</form>
+				</td>
+				<td>${if !$item.price}0.00{else}{$item.price}{/if}</td>
+				<td><a href="index.php?remove_from_cart=true&item_id={$item.id}">remove</a></td>
+			</tr>
+		{/foreach}
+	</table>
+	
+	
+	<p>&nbsp;</p>
+	<h2 class="textCenter"><a href="http://www.alanmarcero.com" />Return to Store</a></h2>
+	<hr />
+		<div id="subtotal">
+			<h1>Subtotal: ${$subtotal}</h1>
+			<p>&nbsp;</p>
+			{if $subtotal != 0.00}
+				{if !$paypal_test}
+				<form action="https://www.paypal.com/cgi-bin/webscr/" method="POST" >
+				{else}
+				<form action="https://www.sandbox.paypal.com/cgi-bin/webscr/" method="POST" >
+				{/if}
+					<input type="hidden" name="cmd" value="_cart">
+					<input type="hidden" name="business" value="{$admin_email}">
+					<input type="hidden" name="item_name" value="Item Name">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="amount" value="{$subtotal}">
+					<input type="hidden" name="upload" value="1">
+					
+					
+					{foreach from=$cart item=item name=paypal_cart}
+						<input type = "hidden" name ="item_name_{$smarty.foreach.paypal_cart.iteration}" value="{$item.name}">
+						<input type = "hidden" name ="amount_{$smarty.foreach.paypal_cart.iteration}" value="{$item.price}">
+						<input type = "hidden" name ="item_number_{$smarty.foreach.paypal_cart.iteration}" value ="{$item.id}">
+					{/foreach}
+					<input type="submit" value="Proceed to PayPal" />
+				</form>
+			{else}
+				<form action="index.php" method="POST" />
+					<input type="hidden" name="free_purchase" value="true" />
+					<input type="submit" value="Purchase Items" />
+				</form>
+			{/if}
+		</div>
+{else}
+	<p>Your cart is empty! :(</p>
+{/if}

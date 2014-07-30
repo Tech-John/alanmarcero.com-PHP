@@ -1,0 +1,9 @@
+<p>If you encounter a problem while downloading an item, you may contact me at <a href="mailto:{$admin_email}">{$admin_email}</a>.</p>
+
+{foreach from=$purchased_items item=item}
+	<p>
+		<form action="{$item.full_item_url}" method="GET">
+			<input type="submit" value="Download {$item.name}" class="buttonSubmit" />
+		</form>
+	</p>
+{/foreach}
