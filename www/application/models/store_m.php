@@ -21,6 +21,7 @@ class Store_m extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->database();
     }
 
     /**
@@ -32,9 +33,24 @@ class Store_m extends CI_Model
         return $this->db->count_all($this->tbl['customers']);
     }
 
-    public function getPurchasesCount()
+    /**
+     * [getPurchasedCount the total count of purchased items]
+     * @return [type] [description]
+     */
+    public function getPurchasedCount()
     {
         return $this->db->count_all($this->tbl['purchases']);
+    }
+
+    /**
+     * [getLastPurchased returns the last item purchased]
+     * @return [type] [description]
+     */
+    public function getLastPurchased()
+    {
+        $query = "SELECT * FROM {$this->tbl['purchases']} ORDER BY created_at DESC LIMIT 1";
+        $result = $this->db->query($query);
+        return $result->result_object()[0];
     }
 
     /**
@@ -55,7 +71,7 @@ class Store_m extends CI_Model
         $query .= " ORDER BY id DESC";
 
         # grab data
-        $query = $this->db->get($query);
-        return $query->result_object();
+        $result = $this->db->query($query);
+        return $result->result_object();
     }
 }

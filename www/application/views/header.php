@@ -25,7 +25,7 @@
 <div id="sectionHeading">
     <div id="sectionHeadingText">
         <div id="cart">
-            {$data.customer_count} people have purchased {$data.item_count} patch banks :: Last purchase {$data.last_item}
+            <?php echo $customer_count; ?> people have purchased <?php echo $purchased_count; ?> patch banks :: Last purchase <?php echo $last_purchase; ?>
         </div>
         <div id="loggedIn">
             {if $data.session_email}Logged in with email: {$data.session_email}{/if}

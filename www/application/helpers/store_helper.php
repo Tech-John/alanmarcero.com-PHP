@@ -45,3 +45,13 @@
 
         return $random_password;
     }
+
+    /**
+     * [ex pre print dies the input array or object]
+     * @param  [type] $array [description]
+     * @return [type]        [description]
+     */
+    function ex($array)
+    {
+        die("<pre>" . print_r($array, true) . "</pre>");
+    }
