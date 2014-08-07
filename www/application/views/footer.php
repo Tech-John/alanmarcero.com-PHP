@@ -6,7 +6,6 @@
     </div><!-- end sectionContentText -->
 </div> <!-- end sectionContent -->
 
-{literal}
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -20,8 +19,5 @@
   })();
 
 </script>
-{/literal}
-
 </body>
-
 </html>

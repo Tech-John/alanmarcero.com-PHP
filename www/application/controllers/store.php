@@ -20,11 +20,15 @@ class Store extends CI_Controller {
         $this->load->helper('store_helper');
         $this->load->model('store_m');
 
+        # load the header
         $this->loadHeader();
+
+        # load the store
+        $items = $this->store_m->getStoreEntries();
+        $this->load->view('items', array('items' => $items));
+
+        # load the footer
         $this->loadFooter();
-
-
-
 	}
 
     /**
@@ -54,7 +58,6 @@ class Store extends CI_Controller {
      */
     private function loadFooter()
     {
-
         $this->load->view('footer');
     }
 }
