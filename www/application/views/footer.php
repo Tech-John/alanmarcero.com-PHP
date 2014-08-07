@@ -1,5 +1,3 @@
-
-        {$content}
     <div id="footer">
         <p style="margin:0px;">
             All Synthesizer Patch Banks &copy; <?php echo date("Y"); ?> Alan Marcero.  Content of the audio demos is copyright their respective owners.
