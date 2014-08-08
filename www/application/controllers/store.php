@@ -18,7 +18,7 @@ class Store extends CI_Controller {
     }
 
     /**
-     * [index description]
+     * [index main page / store -- listing of items]
      * @return [type] [description]
      */
 	public function index()
@@ -30,9 +30,22 @@ class Store extends CI_Controller {
         $this->loadFooter();
 	}
 
+    /**
+     * [about right, what's all this then?]
+     * @return [type] [description]
+     */
     public function about()
     {
         $this->load->view('about');
+        $this->loadFooter();
+    }
+
+    /**
+     * [customers redirects back to login if not logged in, otherwise to the customer section]
+     * @return [type] [description]
+     */
+    public function customers()
+    {
         $this->loadFooter();
     }
 

@@ -40,6 +40,7 @@
 
 $route['default_controller'] = "store";
 $route['about'] = "store/about";
+$route['customers'] = "store/customers";
 $route['404_override'] = 'store';
 
 
