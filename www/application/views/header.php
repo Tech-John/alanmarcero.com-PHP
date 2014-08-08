@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 
 <title>--- Alan Marcero  &middot;  Web Programmer  &middot;  Music Producer ---</title>
@@ -10,7 +10,7 @@
 <body>
 <div id="banner">
     <div id="bannerContent">
-        <a href="http://www.alanmarcero.com"><img src="http://www.alanmarcero.com/images/me.png" /></a>
+        <a href="/"><img src="/images/me.png" /></a>
     </div>
 </div> <!-- end banner -->
 
