@@ -8,6 +8,13 @@ class Store extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+
+        # load dependencies
+        $this->load->helper('store_helper');
+        $this->load->model('store_m');
+
+        # load the header for every store page
+        $this->loadHeader();
     }
 
     /**
@@ -16,20 +23,18 @@ class Store extends CI_Controller {
      */
 	public function index()
 	{
-
-        $this->load->helper('store_helper');
-        $this->load->model('store_m');
-
-        # load the header
-        $this->loadHeader();
-
         # load the store
         $items = $this->store_m->getStoreEntries();
         $this->load->view('items', array('items' => $items));
 
-        # load the footer
         $this->loadFooter();
 	}
+
+    public function about()
+    {
+        $this->load->view('about');
+        $this->loadFooter();
+    }
 
     /**
      * [loadHeader grabs the required data and loads the header]

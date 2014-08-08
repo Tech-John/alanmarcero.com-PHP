@@ -17,7 +17,7 @@
 <div id="nav">
     <div id="navContent">
         <ul>
-            <li><a href="index.php">Sound Design</li><li><a href="customers.php">Customer's Section</li><li><a href="index.php?page=about">About</li><li><a href="http://www.youtube.com/AlanMarcero">YouTube</a></li><li><a href="http://www.soundcloud.com/AlanMarcero">SoundCloud</a></li>{if $data.session_email}<li style="text-align:right"><a href="logout.php" />Logout</a></li>{/if}
+            <li><a href="/">Sound Design</li><li><a href="/customers">Customer's Section</li><li><a href="/about">About</li><li><a href="http://www.youtube.com/AlanMarcero">YouTube</a></li><li><a href="http://www.soundcloud.com/AlanMarcero">SoundCloud</a></li>{if $data.session_email}<li style="text-align:right"><a href="logout.php" />Logout</a></li>{/if}
         </ul>
     </div>
 </div>

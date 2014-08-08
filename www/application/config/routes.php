@@ -39,7 +39,8 @@
 */
 
 $route['default_controller'] = "store";
-$route['404_override'] = '';
+$route['about'] = "store/about";
+$route['404_override'] = 'store';
 
 
 /* End of file routes.php */
