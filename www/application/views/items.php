@@ -12,7 +12,7 @@
     </div>
 
     <?php if ($item->for_sale) { ?>
-        <form action = 'index.php' method = "GET">
+        <form action = 'index.php' method = "POST">
             <div class="addToCart">
                 <p style="margin:0px;">
                     $<input type="text" class="textField" name='price' value="25.00" size='3'/>

@@ -66,6 +66,15 @@ class Store extends CI_Controller {
         $item = $this->store_m->getLastPurchased();
         $data['last_purchase'] = prettyTime(strtotime($item->created_at));
 
+        # start the session if not available
+        $this->load->library('session');
+        $email = $this->session->userdata('email');
+        if (empty($email)) {
+            $this->session->sess_create();
+        } else {
+            $data['email'] = $email;
+        }
+
         # set our data and load the header
         $this->load->view('header', $data);
     }
