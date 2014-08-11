@@ -5,8 +5,8 @@
     <?php echo $item->content ?>
 
     <div class="clearLeft">
-        <object type="application/x-shockwave-flash" data="/dewplayer.swf?mp3=<?php echo $item->audio_demo ?>_lq.mp3" width="200" height="20">
-        <param name="movie" value="/dewplayer.swf?mp3=<?php echo $item->audio_demo ?>_lq.mp3" />
+        <object type="application/x-shockwave-flash" data="/assets/dewplayer.swf?mp3=<?php echo $item->audio_demo ?>_lq.mp3" width="200" height="20">
+        <param name="movie" value="/assets/dewplayer.swf?mp3=<?php echo $item->audio_demo ?>_lq.mp3" />
         </object><br />
         <a href="<?php echo $item->audio_demo ?>.mp3">Download Audio Demo</a>
     </div>
