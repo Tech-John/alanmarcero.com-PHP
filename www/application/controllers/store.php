@@ -144,6 +144,12 @@ class Store extends CI_Controller {
     }
 
     /**
+     *
+     * PRIVATE METHODS
+     *
+     */
+
+    /**
      * [calculateCartTotal goes through the session cart and calculates the subtotal]
      * @return [float] [the total price for all items in the cart]
      */
