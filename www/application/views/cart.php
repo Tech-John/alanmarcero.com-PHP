@@ -35,7 +35,7 @@
 			<h1>Subtotal: $<?php echo $subtotal; ?> USD</h1>
 			<p>&nbsp;</p>
 			<?php
-                if ($subtotal === 0.00) {
+                if ($subtotal > 0.00) {
     				if ($paypal_test) {
     				    echo '<form action="https://www.paypal.com/cgi-bin/webscr/" method="POST">';
     				} else {
