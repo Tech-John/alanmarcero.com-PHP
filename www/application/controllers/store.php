@@ -99,6 +99,7 @@ class Store extends CI_Controller {
 
         # show the cart
         $this->load->view("cart", $data);
+        $this->loadFooter();
     }
 
     /**
@@ -127,6 +128,19 @@ class Store extends CI_Controller {
 
         # show the cart after we removed an item to it
         redirect("/showCart");
+    }
+
+    /**
+     * [freePurchase displays the email form to signup a user to receive free items]
+     * @return [type] [description]
+     */
+    public function freePurchase()
+    {
+        # if the user is not logged in, ask for their email
+        $data['email'] = $this->session->userdata('email');
+
+        $this->load->view('free_purchase', $data);
+        $this->loadFooter();
     }
 
     /**

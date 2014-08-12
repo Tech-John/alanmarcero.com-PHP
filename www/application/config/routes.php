@@ -44,6 +44,7 @@ $route['customers'] = "store/customers";
 $route['addToCart'] = "store/addToCart";
 $route['removeFromCart'] = "store/removeFromCart";
 $route['showCart'] = "store/showCart";
+$route['freePurchase'] = "store/freePurchase";
 $route['404_override'] = 'store';
 
 
