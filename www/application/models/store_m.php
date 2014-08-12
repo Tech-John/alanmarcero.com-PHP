@@ -91,4 +91,42 @@ class Store_m extends CI_Model
         $obj = $result->result_object();
         return $obj[0]->name;
     }
+
+    /**
+     * [createUser creates a user with the input email and generates a random password for that user_error()
+     *     if the input email is already in use, false is returned]
+     * @param  [string] $email [the email address for this user, required]
+     * @return [void]        [description]
+     */
+    public function createUser($email)
+    {
+        if (empty($email)) {
+            return false;
+        }
+    }
+
+    /**
+     * [getUserByEmail gets the user_id and other info from the customers table for the input email]
+     * @param  [string] $email [the email we are looking up.  required, return false if not input]
+     * @return [array]        [one db row from the customers table for this user]
+     */
+    public function getUserByEmail($email)
+    {
+        if (empty($email)) {
+            return false;
+        }
+    }
+
+    /**
+     * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
+     * @param  [user_id] $email [the user_id this item is being tied to, required]
+     * @param  [int] $item_id  [the item_id that the user is purchasing, required]
+     * @return [void]        [description]
+     */
+    public function purchaseItem($user_id, $item_id)
+    {
+        if (empty($user_id) || empty($item_id)) {
+            return false;
+        }
+    }
 }
