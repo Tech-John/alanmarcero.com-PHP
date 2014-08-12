@@ -41,6 +41,9 @@
 $route['default_controller'] = "store";
 $route['about'] = "store/about";
 $route['customers'] = "store/customers";
+$route['addToCart'] = "store/addToCart";
+$route['removeFromCart'] = "store/removeFromCart";
+$route['showCart'] = "store/showCart";
 $route['404_override'] = 'store';
 
 

@@ -12,15 +12,14 @@
     </div>
 
     <?php if ($item->for_sale) { ?>
-        <form action = 'index.php' method = "POST">
+        <form action = '/addToCart' method = "POST">
             <div class="addToCart">
                 <p style="margin:0px;">
                     $<input type="text" class="textField" name='price' value="25.00" size='3'/>
                     <input type='submit' value='Add To Cart' class='buttonSubmit' /><br />
-                    <span class="priceNotice">Name your price (0.00 and up) -- 25.00 is suggested</span>
+                    <span class="priceNotice">Name your price (0.00 and up) -- 25.00 is suggested.  Price is in USD.</span>
                 </p>
             </div>
-            <input type="hidden" name="add_to_cart" value="true" />
             <input type="hidden" name="item_id" value="<?php echo $item->id ?>" />
         </form>
     <?php } else { ?>

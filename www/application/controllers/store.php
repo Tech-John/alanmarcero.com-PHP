@@ -11,12 +11,13 @@ class Store extends CI_Controller {
 
         # load dependencies
         $this->load->helper('store_helper');
+        $this->load->helper('url');
         $this->load->model('store_m');
 
         # start the session if not available
         $this->load->library('session');
-        $email = $this->session->userdata('email');
-        if (empty($email)) {
+        $sess = $this->session->sess_read();
+        if (empty($sess)) {
             $this->session->sess_create();
         }
 
@@ -26,7 +27,6 @@ class Store extends CI_Controller {
 
     /**
      * [index main page / store -- listing of items]
-     * @return [type] [description]
      */
 	public function index()
 	{
@@ -39,7 +39,6 @@ class Store extends CI_Controller {
 
     /**
      * [about right, what's all this then?]
-     * @return [type] [description]
      */
     public function about()
     {
@@ -49,7 +48,6 @@ class Store extends CI_Controller {
 
     /**
      * [customers redirects back to login if not logged in, otherwise to the customer section]
-     * @return [type] [description]
      */
     public function customers()
     {
@@ -57,8 +55,101 @@ class Store extends CI_Controller {
     }
 
     /**
+     * [addToCart creates a cart session for the user and adds the passed item (via post)]
+     */
+    public function addToCart()
+    {
+        # get the data.
+        $item_id = $this->input->post('item_id');
+        $price = $this->input->post('price');
+        $name = $this->store_m->getItemNameById($item_id); // get from DB rather than POST
+        $price = money_format("%i", $price);
+
+        # if we have an item id, proceed.  else show the cart
+        if (!empty($item_id)) {
+            # start the cart
+            $cart = $this->session->userdata('cart');
+            if (empty($cart)) {
+
+                # create the cart if it was empty
+                $this->session->set_userdata(
+                    array("cart" =>
+                        array($item_id =>
+                            array("price" => $price, "name" => $name)
+                        )
+                    )
+                );
+            } else {
+                # insert into or update the item in the cart
+                $cart[$item_id] = array("price" => $price, "name" => $name);
+                $this->session->set_userdata(array("cart" => $cart));
+            }
+        }
+
+        # show the cart after we add an item to it
+        redirect("/showCart");
+    }
+
+    public function showCart()
+    {
+        $data['cart'] = $this->session->userdata('cart');
+        $data['subtotal'] = $this->calculateCartTotal();
+        $data['paypal_test'] = false;
+        $data['admin_email'] = "alanmarcero@gmail.com";
+
+        # show the cart
+        $this->load->view("cart", $data);
+    }
+
+    /**
+     * [removeFromCart removes the item from the cart that is passed via post]
+     */
+    public function removeFromCart()
+    {
+        $remove_this_id = $this->input->post('item_id');
+        # if we have an item_id, remove it from the cart if the item is in there
+        if (!empty($remove_this_id)) {
+            # go through the cart and unset the id if we find it
+            $cart = $this->session->userdata('cart');
+
+            foreach ($cart as $id => $item) {
+                # typecase to int for comparison
+                if ((int)$id === (int)$remove_this_id) {
+                    unset($cart[$remove_this_id]);
+                } else {
+                    echo $id . " " . $remove_this_id;
+                }
+            }
+
+            # now re-write the cart
+            $this->session->set_userdata(array("cart" => $cart));
+        }
+
+        # show the cart after we removed an item to it
+        redirect("/showCart");
+    }
+
+    /**
+     * [calculateCartTotal goes through the session cart and calculates the subtotal]
+     * @return [float] [the total price for all items in the cart]
+     */
+    private function calculateCartTotal()
+    {
+        $cart = $this->session->userdata('cart');
+        $subtotal = 0.00;
+
+        # if the cart isn't empty, go through and tally the total
+        if (!empty($cart)) {
+            foreach ($cart as $item) {
+                $subtotal += $item['price'];
+            }
+        }
+
+        return money_format("%i", $subtotal);
+    }
+
+    /**
      * [loadHeader grabs the required data and loads the header]
-     * @return [type] [description]
      */
     private function loadHeader()
     {
@@ -82,7 +173,6 @@ class Store extends CI_Controller {
 
     /**
      * [loadFooter grabs the required data and loads the footer]
-     * @return [type] [description]
      */
     private function loadFooter()
     {

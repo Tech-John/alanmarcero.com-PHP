@@ -60,7 +60,7 @@ class Store_m extends CI_Model
      */
     public function getStoreEntries($id = null)
     {
-        $query = "SELECT * from {$this->tbl['store']} ";
+        $query = "SELECT * FROM {$this->tbl['store']} ";
 
         # specified an ID?
         if (!empty($id)) {
@@ -73,5 +73,22 @@ class Store_m extends CI_Model
         # grab data
         $result = $this->db->query($query);
         return $result->result_object();
+    }
+
+    /**
+     * [getItemNameById lookup the name of an item by its store id]
+     * @param  [type] $id [the item_id we're looking up]
+     * @return [string]     [the item name]
+     */
+    public function getItemNameById($id)
+    {
+        if (empty($id)) {
+            return false;
+        }
+
+        $query = "SELECT name FROM {$this->tbl['store']} WHERE id = '{$id}' LIMIT 1";
+        $result = $this->db->query($query);
+        $obj = $result->result_object();
+        return $obj[0]->name;
     }
 }
