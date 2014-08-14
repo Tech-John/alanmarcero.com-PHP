@@ -84,6 +84,10 @@ class Store extends CI_Controller {
         redirect("/showCart");
     }
 
+    /**
+     * [showCart get teh data and show the cart]
+     * @return [type] [description]
+     */
     public function showCart()
     {
         $data['cart'] = $this->session->userdata('cart');
