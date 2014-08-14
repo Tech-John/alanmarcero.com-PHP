@@ -108,11 +108,20 @@ class Store_m extends CI_Model
     /**
      * [getUserByEmail gets the user_id and other info from the customers table for the input email]
      * @param  [string] $email [the email we are looking up.  required, return false if not input]
-     * @return [array]        [one db row from the customers table for this user]
+     * @return [array]        [one db row from the customers table for this user, false if not found]
      */
     public function getUserByEmail($email)
     {
         if (empty($email)) {
+            return false;
+        }
+
+        $query = "SELECT * FROM {$this->tbl['purchases']} WHERE email = '{$email}'";
+        $result = $this->db->query($query);
+
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
             return false;
         }
     }
