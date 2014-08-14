@@ -20,9 +20,6 @@ class Store extends CI_Controller {
         if (empty($sess)) {
             $this->session->sess_create();
         }
-
-        # load the header for every store page
-        $this->loadHeader();
     }
 
     /**
@@ -32,9 +29,7 @@ class Store extends CI_Controller {
 	{
         # load the store
         $items = $this->store_m->getStoreEntries();
-        $this->load->view('items', array('items' => $items));
-
-        $this->loadFooter();
+        $this->renderUI("items", array('items' => $items));
 	}
 
     /**
@@ -42,8 +37,7 @@ class Store extends CI_Controller {
      */
     public function about()
     {
-        $this->load->view('about');
-        $this->loadFooter();
+        $this->renderUI("about");
     }
 
     /**
@@ -51,7 +45,7 @@ class Store extends CI_Controller {
      */
     public function customers()
     {
-        $this->loadFooter();
+        $this->renderUI("customers");
     }
 
     /**
@@ -98,8 +92,7 @@ class Store extends CI_Controller {
         $data['admin_email'] = "alanmarcero@gmail.com";
 
         # show the cart
-        $this->load->view("cart", $data);
-        $this->loadFooter();
+        $this->renderUI("cart", $data);
     }
 
     /**
@@ -160,12 +153,10 @@ class Store extends CI_Controller {
         if (!empty($email)) {
             $data['cart'] = $this->session->userdata('cart');
             $this->purchaseSessionCart();
-            $this->load->view('purchase_confirm', $data);
+            $this->renderUI("purchase_confirm", $data);
         } else {
-            $this->load->view('free_purchase', $data);
+            $this->renderUI("free_purchase", $data);
         }
-
-        $this->loadFooter();
     }
 
     /**
@@ -173,7 +164,6 @@ class Store extends CI_Controller {
      * PRIVATE METHODS
      *
      */
-
 
     /**
      * [purchaseSessionCart goes through the session cart and purchases each item
@@ -252,5 +242,22 @@ class Store extends CI_Controller {
     private function loadFooter()
     {
         $this->load->view('footer');
+    }
+
+    /**
+     * [renderUI loads the header view, footer view, and the input content view]
+     * @param  [string] $content_name [the view name to load for content]
+     * @param  [array] $data         [the data to be loaded into the content view]
+     * @return [type]               [description]
+     */
+    private function renderUI($content_name, $data)
+    {
+        if (empty($content_name)) {
+            return false;
+        }
+
+        $this->loadHeader();
+        $this->load->view($content_name, $data);
+        $this->loadFooter();
     }
 }
