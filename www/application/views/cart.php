@@ -62,7 +62,7 @@
 				</form>
 			<?php } else { ?>
 				<form action="/freePurchase" method="POST" />
-					<input type="submit" value="Download Patches" />
+					<input type="submit" value="Purchase Items" />
 				</form>
 			<?php } ?>
 		</div>
