@@ -49,6 +49,18 @@
     }
 
     /**
+     * [verifyEmail description]
+     * @param  [string] $email [the email being verified]
+     * @return [bool]        [true if the email is valid, false if it is not]
+     */
+    function verifyEmail($email)
+    {
+        $this->load->helper('email');
+        return valid_email($email);
+    }
+
+
+    /**
      * [ex pre print dies the input array or object]
      * @param  [type] $array [description]
      * @return [type]        [description]
