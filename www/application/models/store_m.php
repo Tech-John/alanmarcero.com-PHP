@@ -26,7 +26,7 @@ class Store_m extends CI_Model
 
     /**
      * [getCustomerCount returns the total count of customers is the customers table]
-     * @return [type] [description]
+     * @return [type] []
      */
     public function getCustomerCount()
     {
@@ -35,7 +35,7 @@ class Store_m extends CI_Model
 
     /**
      * [getPurchasedCount the total count of purchased items]
-     * @return [type] [description]
+     * @return [type] []
      */
     public function getPurchasedCount()
     {
@@ -44,7 +44,7 @@ class Store_m extends CI_Model
 
     /**
      * [getLastPurchased returns the last item purchased]
-     * @return [type] [description]
+     * @return [type] []
      */
     public function getLastPurchased()
     {
@@ -55,8 +55,8 @@ class Store_m extends CI_Model
 
     /**
      * [getStoreEntries returns all store entry data or data for the input item id]
-     * @param  [type] $id [item id to return, else return all]
-     * @return [type]     [description]
+     * @param  [int/string] $id [item id to return, else return all]
+     * @return [type]     []
      */
     public function getStoreEntries($id = null)
     {
@@ -96,7 +96,7 @@ class Store_m extends CI_Model
      * [createUser creates a user with the input email and generates a random password for that user_error()
      *     if the input email is already in use, false is returned]
      * @param  [string] $email [the email address for this user, required]
-     * @return [void]        [description]
+     * @return [void]        []
      */
     public function createUser($email)
     {
@@ -121,12 +121,30 @@ class Store_m extends CI_Model
      * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
      * @param  [user_id] $email [the user_id this item is being tied to, required]
      * @param  [int] $item_id  [the item_id that the user is purchasing, required]
-     * @return [void]        [description]
+     * @return [void]        []
      */
     public function purchaseItem($user_id, $item_id)
     {
         if (empty($user_id) || empty($item_id)) {
             return false;
+        }
+
+        # first see if this item has already been purchased
+        $query = "SELECT * FROM {$this->tbl['purchases']}
+            WHERE customer_id = '{$user_id}' AND store_entry_id = '{$item_id}'";
+        $result = $this->db->query($query);
+        $already_purchased = $result->num_rows();
+
+        if ($already_purchased) {
+            # just update the date
+            $query = "UPDATE {$this->tbl['purchases']} SET created_at = now()
+                WHERE customer_id = '{$user_id}' AND store_entry_id = '{$item_id}' LIMIT 1";
+            $this->db->query($query);
+        } else {
+            # not already purchased, purchase it
+            $query = "INSERT INTO {$this->tbl['purchases']}
+                SET created_at = now(), customer_id = '{$user_id}', store_entry_id = '{$item_id}'";
+            $this->db->query($query);
         }
     }
 }
