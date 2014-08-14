@@ -35,7 +35,7 @@
         </div>
         <div id="loggedIn">
             <?php if (!empty($email)) {
-                echo 'Logged in with email: {$email}';
+                echo "Logged in with email: {$email}";
             } ?>
         </div>
     </div>
