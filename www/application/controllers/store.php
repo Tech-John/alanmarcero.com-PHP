@@ -198,6 +198,9 @@ class Store extends CI_Controller {
             $this->store_m->purchaseItem($user_id, $item_id);
         }
 
+        # empty the cart
+        $this->session->set_userdata(array('cart' => false));
+
         return true;
     }
 
