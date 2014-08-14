@@ -1,25 +1,15 @@
-{if !$email}
-	<p>To complete your purchase, you must first sign up for an account.  
-	Signing up is very simple!  Just enter your valid email address below:</p>
-	
-	<form action="index.php" method="POST" />
-		<p>
-			<label>Email:<br /></label>
-			<input type="text" name="email" class="textField" />
-			<input type="submit" value="Give Me the Items!" class="buttonSubmit" />
-			<input type="hidden" name="free_purchase" value="true" />
-		</p>
-	</form>
-{else}
-	<h2>Thank you for purchasing the following items:</h2>
-	<ul>
-	{foreach from=$cart item=item}
-	
-		<li>{$item.name}</li>
-	{/foreach}
-	</ul>
-	<hr />
-	Total Paid: ${$subtotal}
-	<p>&nbsp;</p>
-	<strong>You may download your items in the <a href="customers.php">Customer's Section</a></strong>
-{/if}
+<p>To complete your purchase, you must first sign up for an account.
+Signing up is very simple!  Just enter your valid email address below:</p>
+
+<form action="freePurchase" method="POST" />
+	<p>
+		<label>Email:<br /></label>
+		<input type="text" name="email" class="textField" value="<?php echo $invalid_email; ?>" />
+		<input type="submit" value="Give Me the Items!" class="buttonSubmit" />
+	</p>
+    <?php
+        if ($invalid_email) {
+            echo "<p>You have entered an invalid email address!</p>";
+        }
+    ?>
+</form>

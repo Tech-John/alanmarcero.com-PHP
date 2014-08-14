@@ -137,9 +137,34 @@ class Store extends CI_Controller {
     public function freePurchase()
     {
         # if the user is not logged in, ask for their email
-        $data['email'] = $this->session->userdata('email');
+        $email = $this->session->userdata('email');
+        $data = array();
 
-        $this->load->view('free_purchase', $data);
+        # if the user entered an email, was it invalid?  default to valid email
+        $data['invalid_email'] = false;
+
+        # if the email is empty, check the post to see if the user just entered it
+        $post_email = $this->input->post('email');
+        if (!empty($post_email)) {
+            # verify the email
+            if (verifyEmail($post_email)) {
+                $email = $post_email;
+                $this->session->set_userdata(array('email' => $email));
+            } else {
+                # set the email to display it to the user
+                $data['invalid_email'] = $post_email;
+            }
+        }
+
+        # if we don't have an email at this point, ask for one.  else purchase the items
+        if (!empty($email)) {
+            $data['cart'] = $this->session->userdata('cart');
+            $this->purchaseSessionCart();
+            $this->load->view('purchase_confirm', $data);
+        } else {
+            $this->load->view('free_purchase', $data);
+        }
+
         $this->loadFooter();
     }
 
@@ -148,6 +173,33 @@ class Store extends CI_Controller {
      * PRIVATE METHODS
      *
      */
+
+
+    /**
+     * [purchaseSessionCart goes through the session cart and purchases each item
+     *     REQUIRED: the user is logged in with an email]
+     * @return [bool] [description]
+     */
+    private function purchaseSessionCart()
+    {
+        # get the data we need
+        $cart = $this->session->userdata('cart');
+        $email = $this->session->userdata('email');
+        $user = $this->store_m->getUserByEmail($email);
+        $user_id = $user->id;
+
+        # verify our data
+        if (empty($cart) || empty($user_id)) {
+            return false;
+        }
+
+        # purchase each item
+        foreach ($cart as $item_id => $name) {
+            $this->store_m->purchaseItem($user_id, $item_id);
+        }
+
+        return true;
+    }
 
     /**
      * [calculateCartTotal goes through the session cart and calculates the subtotal]

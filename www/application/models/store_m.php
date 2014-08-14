@@ -116,7 +116,7 @@ class Store_m extends CI_Model
             return false;
         }
 
-        $query = "SELECT * FROM {$this->tbl['purchases']} WHERE email = '{$email}'";
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = '{$email}'";
         $result = $this->db->query($query);
 
         if ($result->num_rows() > 0) {
@@ -128,8 +128,8 @@ class Store_m extends CI_Model
 
     /**
      * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
-     * @param  [user_id] $email [the user_id this item is being tied to, required]
-     * @param  [int] $item_id  [the item_id that the user is purchasing, required]
+     * @param  [int/string] $user_id  [the user_id this item is being tied to, required]
+     * @param  [int/string] $item_id  [the item_id that the user is purchasing, required]
      * @return [void]        []
      */
     public function purchaseItem($user_id, $item_id)

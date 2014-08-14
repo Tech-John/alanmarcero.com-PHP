@@ -55,7 +55,8 @@
      */
     function verifyEmail($email)
     {
-        $this->load->helper('email');
+        $CI = get_instance();
+        $CI->load->helper('email');
         return valid_email($email);
     }
 
