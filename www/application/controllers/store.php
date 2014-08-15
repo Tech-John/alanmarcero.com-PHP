@@ -46,15 +46,19 @@ class Store extends CI_Controller {
     public function customers()
     {
         # first see if the user is logged in.  redirect to login if they are not
-        $email = $this->session->userdata('user_id');
-        if (empty($email)) {
+
+        if (!$this->isLoggedIn()) {
             redirect("/login");
         }
 
         # if we haven't redirected them, show them their items available for download
+        $data = array();
+        $user_id = $this->session->userdata('user_id');
+        $data['items'] = $this->store_m->getPurchasesByUserId($user_id);
+        $data['admin_email'] = "alanmarcero@gmail.com";
 
-
-        $this->renderUI("customers");
+        # show the purchased items
+        $this->renderUI("purchased_items", $data);
     }
 
     /**

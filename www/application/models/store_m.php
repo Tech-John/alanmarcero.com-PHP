@@ -195,4 +195,23 @@ class Store_m extends CI_Model
             $this->db->query($query);
         }
     }
+
+    /**
+     * [getPurchasesByUserId takes the input user_id and gets all of that users purchased items]
+     * @param  [type] $user_id [the user_id we are looking for items]
+     * @return [array]          [an array of item objects.  the array will be empty if nothing is found]
+     */
+    public function getPurchasesByUserId($user_id)
+    {
+        if (empty($user_id)) {
+            return false;
+        }
+
+        # get all the items this user has purchased
+        $query = "SELECT * from {$this->tbl['purchases']}
+            JOIN {$this->tbl['store']} ON {$this->tbl['purchases']}.store_entry_id = {$this->tbl['store']}.id
+            WHERE customer_id = '{$user_id}'";
+        $result = $this->db->query($query);
+        return $result->result_object();
+    }
 }
