@@ -151,12 +151,15 @@ class Store extends CI_Controller {
             # did the user input an email yet?
             $email = $this->input->post('email');
 
-            # verify the email if it was input and create the user
+            # verify the email if it was input
             if (verifyEmail($email)) {
+                # create the user and login
                 $user = $this->store_m->createUser($email);
                 $this->session->set_userdata(
                     array('user_id' => $user->id, 'email' => $user->email, 'password' => $user->password)
                 );
+                # run again since the user is now created and loggedin
+                $this->freePurchase();
             } elseif(!empty($email) && !verifyEmail($email)) {
                 # if an invalid email was entered, pass it back to the UI
                 $data['invalid_email'] = $email;
