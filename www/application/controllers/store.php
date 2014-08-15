@@ -241,7 +241,7 @@ class Store extends CI_Controller {
     private function isLoggedIn()
     {
         $user_id = $this->session->userdata('user_id');
-        return empty($user_id);
+        return !empty($user_id);
     }
 
     /**
