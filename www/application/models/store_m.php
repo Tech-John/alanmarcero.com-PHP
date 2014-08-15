@@ -144,11 +144,11 @@ class Store_m extends CI_Model
     }
 
     /**
-     * [getUserByid gets the DB row from the customers table for the input user_id]
+     * [getUserById gets the DB row from the customers table for the input user_id]
      * @param  [type] $user_id [the user_id we are looking up.  required, false if not input]
      * @return [object/bool] [one db row from the customers table for this user, false if not found]
      */
-    public function getUserByid($user_id)
+    public function getUserById($user_id)
     {
         if (empty($user_id)) {
             return false;

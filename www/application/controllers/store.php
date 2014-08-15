@@ -267,7 +267,6 @@ class Store extends CI_Controller {
             $data['email'] = false;
         }
 
-
         # set our data and load the header
         $this->load->view('header', $data);
     }
