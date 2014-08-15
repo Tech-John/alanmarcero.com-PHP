@@ -123,9 +123,9 @@ class Store_m extends CI_Model
     }
 
     /**
-     * [getUserByEmail gets the user_id and other info from the customers table for the input email]
+     * [getUserByEmail gets the DB row from the customers table for the input email]
      * @param  [string] $email [the email we are looking up.  required, return false if not input]
-     * @return [array]        [one db row from the customers table for this user, false if not found]
+     * @return [object/bool]        [one db row from the customers table for this user, false if not found]
      */
     public function getUserByEmail($email)
     {
@@ -142,6 +142,28 @@ class Store_m extends CI_Model
             return false;
         }
     }
+
+    /**
+     * [getUserByid gets the DB row from the customers table for the input user_id]
+     * @param  [type] $user_id [the user_id we are looking up.  required, false if not input]
+     * @return [object/bool] [one db row from the customers table for this user, false if not found]
+     */
+    public function getUserByid($user_id)
+    {
+        if (empty($user_id)) {
+            return false;
+        }
+
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE id = '{$user_id}'";
+        $result = $this->db->query($query);
+
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return false;
+        }
+    }
+
 
     /**
      * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
