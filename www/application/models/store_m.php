@@ -94,15 +94,32 @@ class Store_m extends CI_Model
 
     /**
      * [createUser creates a user with the input email and generates a random password for that user_error()
-     *     if the input email is already in use, false is returned]
+     *     if the input email is already in use, the found user is returned]
      * @param  [string] $email [the email address for this user, required]
-     * @return [void]        []
+     * @return [result object]        [the db row of the created user]
      */
     public function createUser($email)
     {
         if (empty($email)) {
             return false;
         }
+
+        # first make sure the user isn't already in the system
+        $query = "SELECT * from customers where email = '{$email}' LIMIT 1";
+        $result = $this->db->query($query);
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            # create the user
+            $query = "INSERT INTO customers set email = '{$email}', password = '" . generateRandPassword(6) . "'";
+            $result = $this->db->query($query);
+
+            # return the created user
+            $query = "SELECT * from customers where email = '{$email}' LIMIT 1";
+            $result = $this->db->query($query);
+            return $result->row();
+        }
+        return false;
     }
 
     /**
