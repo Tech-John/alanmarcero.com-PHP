@@ -292,7 +292,7 @@ class Store extends CI_Controller {
      * @param  [array] $data         [the data to be loaded into the content view]
      * @return [type]               [description]
      */
-    private function renderUI($content_name, $data)
+    private function renderUI($content_name, $data = array())
     {
         if (empty($content_name)) {
             return false;
