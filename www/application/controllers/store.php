@@ -45,6 +45,15 @@ class Store extends CI_Controller {
      */
     public function customers()
     {
+        # first see if the user is logged in.  redirect to login if they are not
+        $email = $this->session->userdata('user_id');
+        if (empty($email)) {
+            redirect("/login");
+        }
+
+        # if we haven't redirected them, show them their items available for download
+
+
         $this->renderUI("customers");
     }
 
@@ -134,33 +143,32 @@ class Store extends CI_Controller {
     public function freePurchase()
     {
         # if the user is not logged in, ask for their email
-        $email = $this->session->userdata('email');
         $data = array();
-
-        # if the user entered an email, was it invalid?  default to valid email
         $data['invalid_email'] = false;
 
-        # if the email is empty, check the post to see if the user just entered it
-        $post_email = $this->input->post('email');
-        if (!empty($post_email)) {
-            # verify the email
-            if (verifyEmail($post_email)) {
-                $email = $post_email;
-                $user = $this->store_m->createUser($email);
-                $this->session->set_userdata(array('email' => $email));
-            } else {
-                # set the email to display it to the user
-                $data['invalid_email'] = $post_email;
-            }
-        }
+        # if the user is not logged in, ask for and verify their email
+        if (!$this->isLoggedIn()) {
+            # did the user input an email yet?
+            $email = $this->input->post('email');
 
-        # if we don't have an email at this point, ask for one.  else purchase the items
-        if (!empty($email)) {
+            # verify the email if it was input and create the user
+            if (verifyEmail($email)) {
+                $user = $this->store_m->createUser($email);
+                $this->session->set_userdata(
+                    array('user_id' => $user->id, 'email' => $user->email, 'password' => $user->password)
+                );
+            } elseif(!empty($email) && !verifyEmail($email)) {
+                # if an invalid email was entered, pass it back to the UI
+                $data['invalid_email'] = $email;
+            } else {
+                # the user was not logged in and has not entered an email, ask for their email address
+                $this->renderUI("free_purchase", $data);
+            }
+        } else {
+            # the user was already logged in, purchase the items
             $data['cart'] = $this->session->userdata('cart');
             $this->purchaseSessionCart();
             $this->renderUI("purchase_confirm", $data);
-        } else {
-            $this->renderUI("free_purchase", $data);
         }
     }
 
@@ -179,9 +187,7 @@ class Store extends CI_Controller {
     {
         # get the data we need
         $cart = $this->session->userdata('cart');
-        $email = $this->session->userdata('email');
-        $user = $this->store_m->getUserByEmail($email);
-        $user_id = $user->id;
+        $user_id = $this->session->userdata('user_id');
 
         # verify our data
         if (empty($cart) || empty($user_id)) {
@@ -219,6 +225,16 @@ class Store extends CI_Controller {
     }
 
     /**
+     * [isLoggedIn is the user logged in?]
+     * @return bool [true if the user is logged in, false if not]
+     */
+    private function isLoggedIn()
+    {
+        $user_id = $this->session->userdata('user_id');
+        return empty($user_id);
+    }
+
+    /**
      * [loadHeader grabs the required data and loads the header]
      */
     private function loadHeader()
@@ -235,7 +251,12 @@ class Store extends CI_Controller {
         $data['last_purchase'] = prettyTime(strtotime($item->created_at));
 
         # get the email
-        $data['email'] = $this->session->userdata('email');
+        if ($this->isLoggedIn()) {
+            $data['email'] = $this->session->userdata('email');
+        } else {
+            $data['email'] = false;
+        }
+
 
         # set our data and load the header
         $this->load->view('header', $data);
