@@ -45,6 +45,8 @@ $route['addToCart'] = "store/addToCart";
 $route['removeFromCart'] = "store/removeFromCart";
 $route['showCart'] = "store/showCart";
 $route['freePurchase'] = "store/freePurchase";
+$route['logout'] = "store/logout";
+$route['login'] = "store/login";
 $route['404_override'] = 'store';
 
 

@@ -173,6 +173,16 @@ class Store extends CI_Controller {
     }
 
     /**
+     * [logout destroys the session and redirects back to the store]
+     * @return [type] [description]
+     */
+    public function logout()
+    {
+        $this->session->sess_create();
+        redirect("/");
+    }
+
+    /**
      *
      * PRIVATE METHODS
      *
