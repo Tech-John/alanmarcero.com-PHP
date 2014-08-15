@@ -146,6 +146,7 @@ class Store extends CI_Controller {
             # verify the email
             if (verifyEmail($post_email)) {
                 $email = $post_email;
+                $user = $this->store_m->createUser($email);
                 $this->session->set_userdata(array('email' => $email));
             } else {
                 # set the email to display it to the user
