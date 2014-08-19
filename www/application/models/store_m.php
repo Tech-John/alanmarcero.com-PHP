@@ -133,9 +133,38 @@ class Store_m extends CI_Model
             return false;
         }
 
-        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = '{$email}'";
-        $result = $this->db->query($query);
+        # escape inputs by using active record
+        $this->db->select("*")->from($this->tbl['customers']);
+        $this->db->where("email", $email);
 
+        # select the data and return
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * [verifyLogin used to verify if the input login and password are correct]
+     * @param  [string] $email    [the user's email]
+     * @param  [string] $password [the user's password]
+     * @return [obj/bool]         [a user row object if the data is correct, else false]
+     */
+    public function verifyLogin($email, $password)
+    {
+        if (empty($email) || empty($password)) {
+            return false;
+        }
+
+        # escape inputs by using active record
+        $this->db->select("*")->from($this->tbl['customers']);
+        $this->db->where("email", $email);
+        $this->db->where("password", $password);
+
+        # select the data and return
+        $result = $this->db->get();
         if ($result->num_rows() > 0) {
             return $result->row();
         } else {

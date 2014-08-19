@@ -46,7 +46,6 @@ class Store extends CI_Controller {
     public function customers()
     {
         # first see if the user is logged in.  redirect to login if they are not
-
         if (!$this->isLoggedIn()) {
             redirect("/login");
         }
@@ -59,6 +58,67 @@ class Store extends CI_Controller {
 
         # show the purchased items
         $this->renderUI("purchased_items", $data);
+    }
+
+    /**
+     * [login displays and then processes the login form to login if a user is not logged in]
+     * @return [void] [description]
+     */
+    public function login()
+    {
+        # if the user is already logged in, redirect to customers
+        if ($this->isLoggedIn()) {
+            redirect("/customers");
+        } else {
+            # show the login form, or process the login
+            $data = array();
+
+            # did the user input an email and password yet?
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+
+            # if info was entered, verify it and login.  else return with an 'invalid login' message
+            if (verifyEmail($email) && !empty($password)) {
+                $user = $this->store_m->verifyLogin($email, $password);
+                if (!empty($user)) {
+                    # login
+                    $this->session->set_userdata(
+                       array('user_id' => $user->id, 'email' => $user->email, 'password' => $user->password)
+                    );
+                    # redirect to customers since we are now logged in
+                    redirect("/customers");
+                } else {
+                    # login was invalid, return an error and sticky the email
+                    $data['invalid_login'] = true;
+                    $data['email'] = $email;
+                }
+            } elseif (!empty($email) || !empty($password)) {
+                $data['invalid_login'] = true;
+            }
+
+            # render login page unless we were redirected to /customers
+            $this->renderUI("login", $data);
+        }
+
+
+    }
+
+    /**
+     * [getPassword displays and then processes the get password form]
+     * @return [void] [description]
+     */
+    public function getPassword()
+    {
+        # did the user input an email yet?
+        $email = $this->input->post('email');
+
+        if (verify_email($email)) {
+            $user = $this->store_m->getUserByEmail($email);
+            if (!empty($user)) {
+                # send the account info, show the confirmation
+                $data['email_sent'] = true;
+            }
+        }
     }
 
     /**
