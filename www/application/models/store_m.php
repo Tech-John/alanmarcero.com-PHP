@@ -35,7 +35,7 @@ class Store_m extends CI_Model
 
     /**
      * [getPurchasedCount the total count of purchased items]
-     * @return [type] []
+     * @return [int] [the count]
      */
     public function getPurchasedCount()
     {
@@ -44,7 +44,7 @@ class Store_m extends CI_Model
 
     /**
      * [getLastPurchased returns the last item purchased]
-     * @return [type] []
+     * @return [obj] [the db row of the last purchased item]
      */
     public function getLastPurchased()
     {
@@ -56,7 +56,7 @@ class Store_m extends CI_Model
     /**
      * [getStoreEntries returns all store entry data or data for the input item id]
      * @param  [int/string] $id [item id to return, else return all]
-     * @return [type]     []
+     * @return [array]     [array of result objects, every store entry]
      */
     public function getStoreEntries($id = null)
     {
@@ -198,7 +198,7 @@ class Store_m extends CI_Model
      * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
      * @param  [int/string] $user_id  [the user_id this item is being tied to, required]
      * @param  [int/string] $item_id  [the item_id that the user is purchasing, required]
-     * @return [void]        []
+     * @return [void]
      */
     public function purchaseItem($user_id, $item_id)
     {

@@ -4,6 +4,7 @@ class Store extends CI_Controller {
 
     /**
      * [__construct constructor]
+     * @return [void]
      */
     public function __construct()
     {
@@ -25,6 +26,7 @@ class Store extends CI_Controller {
 
     /**
      * [index main page / store -- listing of items]
+     * @return [void]
      */
 	public function index()
 	{
@@ -35,6 +37,7 @@ class Store extends CI_Controller {
 
     /**
      * [about right, what's all this then?]
+     * @return [void]
      */
     public function about()
     {
@@ -43,6 +46,7 @@ class Store extends CI_Controller {
 
     /**
      * [customers redirects back to login if not logged in, otherwise to the customer section]
+     * @return [void]
      */
     public function customers()
     {
@@ -100,8 +104,6 @@ class Store extends CI_Controller {
             # render login page unless we were redirected to /customers
             $this->renderUI("login", $data);
         }
-
-
     }
 
     /**
@@ -124,6 +126,7 @@ class Store extends CI_Controller {
 
     /**
      * [addToCart creates a cart session for the user and adds the passed item (via post)]
+     * @return [void]
      */
     public function addToCart()
     {
@@ -160,7 +163,7 @@ class Store extends CI_Controller {
 
     /**
      * [showCart get teh data and show the cart]
-     * @return [type] [description]
+     * @return [void]
      */
     public function showCart()
     {
@@ -175,6 +178,7 @@ class Store extends CI_Controller {
 
     /**
      * [removeFromCart removes the item from the cart that is passed via post]
+     * @return [void]
      */
     public function removeFromCart()
     {
@@ -203,7 +207,7 @@ class Store extends CI_Controller {
 
     /**
      * [freePurchase displays the email form to signup a user to receive free items]
-     * @return [type] [description]
+     * @return [void]
      */
     public function freePurchase()
     {
@@ -242,7 +246,7 @@ class Store extends CI_Controller {
 
     /**
      * [logout destroys the session and redirects back to the store]
-     * @return [type] [description]
+     * @return [void]
      */
     public function logout()
     {
@@ -314,6 +318,7 @@ class Store extends CI_Controller {
 
     /**
      * [loadHeader grabs the required data and loads the header]
+     * @return [void]
      */
     private function loadHeader()
     {
@@ -341,6 +346,7 @@ class Store extends CI_Controller {
 
     /**
      * [loadFooter grabs the required data and loads the footer]
+     * @return [void]
      */
     private function loadFooter()
     {
