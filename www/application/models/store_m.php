@@ -64,6 +64,8 @@ class Store_m extends CI_Model
 
         # specified an ID?
         if (!empty($id)) {
+            # sanitize our inputs which also adds quotes
+            $id = $this->db->escape($id);
             $query .= " WHERE id = {$id} ";
         }
 
@@ -84,9 +86,12 @@ class Store_m extends CI_Model
     {
         if (empty($id)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $this->db->escape($id);
         }
 
-        $query = "SELECT name FROM {$this->tbl['store']} WHERE id = '{$id}' LIMIT 1";
+        $query = "SELECT name FROM {$this->tbl['store']} WHERE id = {$id} LIMIT 1";
         $result = $this->db->query($query);
         $obj = $result->result_object();
         return $obj[0]->name;
@@ -102,20 +107,23 @@ class Store_m extends CI_Model
     {
         if (empty($email)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $email = $this->db->escape($email);
         }
 
         # first make sure the user isn't already in the system
-        $query = "SELECT * from customers where email = '{$email}' LIMIT 1";
+        $query = "SELECT * FROM customers WHERE email = {$email} LIMIT 1";
         $result = $this->db->query($query);
         if ($result->num_rows() > 0) {
             return $result->row();
         } else {
             # create the user
-            $query = "INSERT INTO customers set email = '{$email}', password = '" . generateRandPassword(6) . "'";
+            $query = "INSERT INTO customers SET email = {$email}, password = '" . generateRandPassword(6) . "'";
             $result = $this->db->query($query);
 
             # return the created user
-            $query = "SELECT * from customers where email = '{$email}' LIMIT 1";
+            $query = "SELECT * FROM customers WHERE email = {$email} LIMIT 1";
             $result = $this->db->query($query);
             return $result->row();
         }
@@ -131,14 +139,15 @@ class Store_m extends CI_Model
     {
         if (empty($email)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $email = $this->db->escape($email);
         }
 
-        # escape inputs by using active record
-        $this->db->select("*")->from($this->tbl['customers']);
-        $this->db->where("email", $email);
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email}";
 
         # select the data and return
-        $result = $this->db->get();
+        $result = $this->db->query($query);
         if ($result->num_rows() > 0) {
             return $result->row();
         } else {
@@ -156,15 +165,16 @@ class Store_m extends CI_Model
     {
         if (empty($email) || empty($password)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $email = $this->db->escape($email);
+            $password = $this->db->escape($password);
         }
 
-        # escape inputs by using active record
-        $this->db->select("*")->from($this->tbl['customers']);
-        $this->db->where("email", $email);
-        $this->db->where("password", $password);
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email} AND password = {$password}";
 
         # select the data and return
-        $result = $this->db->get();
+        $result = $this->db->query($query);
         if ($result->num_rows() > 0) {
             return $result->row();
         } else {
@@ -181,9 +191,12 @@ class Store_m extends CI_Model
     {
         if (empty($user_id)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $user_id = $this->db->escape($user_id);
         }
 
-        $query = "SELECT * FROM {$this->tbl['customers']} WHERE id = '{$user_id}'";
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE id = {$user_id}";
         $result = $this->db->query($query);
 
         if ($result->num_rows() > 0) {
@@ -204,23 +217,27 @@ class Store_m extends CI_Model
     {
         if (empty($user_id) || empty($item_id)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $user_id = $this->db->escape($user_id);
+            $item_id = $this->db->escape($item_id);
         }
 
         # first see if this item has already been purchased
         $query = "SELECT * FROM {$this->tbl['purchases']}
-            WHERE customer_id = '{$user_id}' AND store_entry_id = '{$item_id}'";
+            WHERE customer_id = {$user_id} AND store_entry_id = {$item_id}";
         $result = $this->db->query($query);
         $already_purchased = $result->num_rows();
 
         if ($already_purchased) {
             # just update the date
             $query = "UPDATE {$this->tbl['purchases']} SET created_at = now()
-                WHERE customer_id = '{$user_id}' AND store_entry_id = '{$item_id}' LIMIT 1";
+                WHERE customer_id = {$user_id} AND store_entry_id = {$item_id} LIMIT 1";
             $this->db->query($query);
         } else {
             # not already purchased, purchase it
             $query = "INSERT INTO {$this->tbl['purchases']}
-                SET created_at = now(), customer_id = '{$user_id}', store_entry_id = '{$item_id}'";
+                SET created_at = now(), customer_id = {$user_id}, store_entry_id = {$item_id}";
             $this->db->query($query);
         }
     }
@@ -234,12 +251,15 @@ class Store_m extends CI_Model
     {
         if (empty($user_id)) {
             return false;
+        } else {
+            # sanitize our inputs which also adds quotes
+            $this->db->escape($user_id);
         }
 
         # get all the items this user has purchased
         $query = "SELECT * from {$this->tbl['purchases']}
             JOIN {$this->tbl['store']} ON {$this->tbl['purchases']}.store_entry_id = {$this->tbl['store']}.id
-            WHERE customer_id = '{$user_id}'";
+            WHERE customer_id = {$user_id}";
         $result = $this->db->query($query);
         return $result->result_object();
     }
