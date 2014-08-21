@@ -36,7 +36,7 @@
 			<p>&nbsp;</p>
 			<?php
                 if ($subtotal > 0.00) {
-    				if ($paypal_test) {
+    				if ($dev_mode) {
     				    echo '<form action="https://www.paypal.com/cgi-bin/webscr/" method="POST">';
     				} else {
     				    echo '<form action="https://www.sandbox.paypal.com/cgi-bin/webscr/" method="POST">';

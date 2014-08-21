@@ -169,7 +169,7 @@ class Store extends CI_Controller {
     {
         $data['cart'] = $this->session->userdata('cart');
         $data['subtotal'] = $this->calculateCartTotal();
-        $data['paypal_test'] = PAYPAL_TEST;
+        $data['paypal_test'] = DEV_MODE;
         $data['admin_email'] = ADMIN_EMAIL;
 
         # show the cart
