@@ -59,7 +59,7 @@ class Store extends CI_Controller {
         $data = array();
         $user_id = $this->session->userdata('user_id');
         $data['items'] = $this->store_m->getPurchasesByUserId($user_id);
-        $data['admin_email'] = "alanmarcero@gmail.com";
+        $data['admin_email'] = ADMIN_EMAIL;
 
         # show the purchased items
         $this->renderUI("purchased_items", $data);
@@ -169,8 +169,8 @@ class Store extends CI_Controller {
     {
         $data['cart'] = $this->session->userdata('cart');
         $data['subtotal'] = $this->calculateCartTotal();
-        $data['paypal_test'] = false;
-        $data['admin_email'] = "alanmarcero@gmail.com";
+        $data['paypal_test'] = PAYPAL_TEST;
+        $data['admin_email'] = ADMIN_EMAIL;
 
         # show the cart
         $this->renderUI("cart", $data);
