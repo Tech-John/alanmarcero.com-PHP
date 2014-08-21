@@ -2,3 +2,5 @@
 orig/includes/globals.php
 
 *.xps
+
+www/application/config/constants.php
