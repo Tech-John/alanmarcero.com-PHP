@@ -16,29 +16,51 @@ class StoreEmail
         # Get CodeIgniter instance
         $this->CI =& get_instance();
 
-        # load the email helper
+        # load the email helper and set the sender
         $this->CI->load->library('email');
+        $this->CI->email->from(ADMIN_EMAIL, 'Alan Marcero');
 
     }
 
     /**
      * [purchaseConfirm description]
-     * @param  [type] $cart     [description]
+     * @param  [type] $items     [description]
      * @param  [type] $email    [description]
      * @param  [type] $password [description]
      * @param  [type] $free     [description]
      * @return [type]           [description]
      */
-    public function purchaseConfirm($cart, $email, $password, $free)
+    public function purchaseConfirm($items, $email, $password, $free)
     {
+        # set the data
+        $data = array();
+        $data['items'] = $items;
+        $data['email'] = $email;
+        $data['password'] = $password;
+
+        # set the subject
         $subject = "Your AlanMarcero.com Purchase";
-        $this->smarty->assign('cart', $cart);
-        $this->smarty->assign('email', $email);
-        $this->smarty->assign('password', $password);
-        $content = $this->smarty->fetch(PATH_TEMPLATES . '/mail/purchase_confirm.html');
-        if(PAYPAL_TEST) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
-        elseif($free) mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
-        else mail($email, $subject, $content, "From: " . ADMIN_EMAIL . "\r\n" . "Cc: " . ADMIN_EMAIL . "\r\n");
+        $this->CI->email->subject($subject);
+
+        # set the message content
+        $content = $this->CI->load->view('/emails/purchase_confirm', $data, true);
+        $this->CI->email->message($content);
+
+        # set the recipient
+        if (DEV_MODE) {
+            # send the email to the admin for dev mode
+            $this->CI->email->to(ADMIN_EMAIL);
+        } else {
+            $this->CI->email->to($email);
+
+            # send me a copy if this is not a "free" purchase, for records
+            if (!$free) {
+                $this->CI->email->cc(ADMIN_EMAIL);
+            }
+        }
+
+        # send the message
+        $this->CI->email->send();
     }
 
     /**
@@ -52,8 +74,8 @@ class StoreEmail
         $subject = "Your AlanMarcero.com Account Information";
         $this->smarty->assign('email', $email);
         $this->smarty->assign('password', $password);
-        $content = $this->smarty->fetch(PATH_TEMPLATES . '/mail/account_information.html');
-        if(PAYPAL_TEST) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
+        $content = $this->CI->load->view(PATH_TEMPLATES . '/mail/account_information.html');
+        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
         else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
     }
 
@@ -66,8 +88,8 @@ class StoreEmail
     {
         $subject = "AlanMarcero.com Product Notification Opt-In";
         $this->smarty->assign('email', $email);
-        $content = $this->smarty->fetch(PATH_TEMPLATES . '/mail/opt_in.html');
-        if(PAYPAL_TEST) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
+        $content = $this->CI->load->view(PATH_TEMPLATES . '/mail/opt_in.html');
+        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
         else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
     }
 
@@ -80,8 +102,8 @@ class StoreEmail
     {
         $subject = "AlanMarcero.com Product Notification Opt-Out";
         $this->smarty->assign('email', $email);
-        $content = $this->smarty->fetch(PATH_TEMPLATES . '/mail/opt_out.html');
-        if(PAYPAL_TEST) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
+        $content = $this->CI->load->view(PATH_TEMPLATES . '/mail/opt_out.html');
+        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
         else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
     }
 
@@ -94,7 +116,7 @@ class StoreEmail
      */
     public function promoEmail($subject, $content, $email)
     {
-        if(PAYPAL_TEST) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
+        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
         else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
     }
 }

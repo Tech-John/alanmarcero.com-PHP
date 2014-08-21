@@ -162,14 +162,14 @@ class Store extends CI_Controller {
     }
 
     /**
-     * [showCart get teh data and show the cart]
+     * [showCart get the data and show the cart]
      * @return [void]
      */
     public function showCart()
     {
         $data['cart'] = $this->session->userdata('cart');
         $data['subtotal'] = $this->calculateCartTotal();
-        $data['paypal_test'] = DEV_MODE;
+        $data['dev_mode'] = DEV_MODE;
         $data['admin_email'] = ADMIN_EMAIL;
 
         # show the cart
@@ -237,9 +237,27 @@ class Store extends CI_Controller {
                 $this->renderUI("free_purchase", $data);
             }
         } else {
-            # the user was already logged in, purchase the items
+            # the user is logged in, purchase the items and send the email
             $data['cart'] = $this->session->userdata('cart');
+
+            # get the extra data for each purchased item
+            $item_ids = array();
+            foreach ($data['cart'] as $item_id => $item) {
+                $item_ids[] = $item_id;
+            }
+            $purchased_items = $this->store_m->getStoreEntries($item_ids);
+
+            # need to purchase after setting data since the cart is emptied
             $this->purchaseSessionCart();
+
+            # send the purchase confirm email
+            $this->storeemail->purchaseConfirm(
+                $purchased_items,
+                $this->session->userdata('email'),
+                $this->session->userdata('password'),
+                true
+            );
+
             $this->renderUI("purchase_confirm", $data);
         }
     }

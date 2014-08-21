@@ -55,7 +55,7 @@ class Store_m extends CI_Model
 
     /**
      * [getStoreEntries returns all store entry data or data for the input item id]
-     * @param  [int/string] $id [item id to return, else return all]
+     * @param  [int/string/array] $id [single item id to return, or an array of item ids to return, else return all]
      * @return [array]     [array of result objects, every store entry]
      */
     public function getStoreEntries($id = null)
@@ -64,9 +64,25 @@ class Store_m extends CI_Model
 
         # specified an ID?
         if (!empty($id)) {
-            # sanitize our inputs which also adds quotes
-            $id = $this->db->escape($id);
-            $query .= " WHERE id = {$id} ";
+            if (is_array($id)) {
+                if (!count($id)) {
+                    return false;
+                } else {
+                    # sanitize
+                    foreach ($id as $index => $data) {
+                        $id[$index] = $this->db->escape($data);
+                    }
+
+                    # implode into WHERE
+                    $query .= " WHERE id IN (" . implode(", ", $id) . ") ";
+                }
+            } else {
+                # sanitize our inputs which also adds quotes
+                $id = $this->db->escape($id);
+                $query .= " WHERE id = {$id} ";
+            }
+
+
         }
 
         # order by
