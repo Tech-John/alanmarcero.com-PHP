@@ -82,8 +82,6 @@ class Store_m extends CI_Model
                 $id = $this->db->escape($id);
                 $query .= " WHERE id = {$id} ";
             }
-
-
         }
 
         # order by
