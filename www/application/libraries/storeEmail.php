@@ -19,7 +19,6 @@ class StoreEmail
         # load the email helper and set the sender
         $this->CI->load->library('email');
         $this->CI->email->from(ADMIN_EMAIL, 'Alan Marcero');
-
     }
 
     /**
@@ -51,6 +50,7 @@ class StoreEmail
             # send the email to the admin for dev mode
             $this->CI->email->to(ADMIN_EMAIL);
         } else {
+            # send to the input email
             $this->CI->email->to($email);
 
             # send me a copy if this is not a "free" purchase, for records
@@ -71,26 +71,29 @@ class StoreEmail
      */
     public function accountInfo($email, $password)
     {
-        $subject = "Your AlanMarcero.com Account Information";
-        $this->smarty->assign('email', $email);
-        $this->smarty->assign('password', $password);
-        $content = $this->CI->load->view(PATH_TEMPLATES . '/mail/account_information.html');
-        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
-        else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
-    }
+        # set the data
+        $data = array();
+        $data['email'] = $email;
+        $data['password'] = $password;
 
-    /**
-     * [optIn description]
-     * @param  [type] $email [description]
-     * @return [type]        [description]
-     */
-    public function optIn($email)
-    {
-        $subject = "AlanMarcero.com Product Notification Opt-In";
-        $this->smarty->assign('email', $email);
-        $content = $this->CI->load->view(PATH_TEMPLATES . '/mail/opt_in.html');
-        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
-        else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
+        # set the subject
+        $subject = "Your AlanMarcero.com Account Information";
+        $this->CI->email->subject($subject);
+
+        $content = $this->CI->load->view('/emails/account_information', $data, true);
+        $this->CI->email->message($content);
+
+        # set the recipient
+        if (DEV_MODE) {
+            # send the email to the admin for dev mode
+            $this->CI->email->to(ADMIN_EMAIL);
+        } else {
+            # send to the input email
+            $this->CI->email->to($email);
+        }
+
+        # send the message
+        $this->CI->email->send();
     }
 
     /**
@@ -101,22 +104,5 @@ class StoreEmail
     public function optOut($email)
     {
         $subject = "AlanMarcero.com Product Notification Opt-Out";
-        $this->smarty->assign('email', $email);
-        $content = $this->CI->load->view(PATH_TEMPLATES . '/mail/opt_out.html');
-        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
-        else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
-    }
-
-    /**
-     * [promoEmail description]
-     * @param  [type] $subject [description]
-     * @param  [type] $content [description]
-     * @param  [type] $email   [description]
-     * @return [type]          [description]
-     */
-    public function promoEmail($subject, $content, $email)
-    {
-        if(DEV_MODE) mail(ADMIN_EMAIL, $subject, $content, "From: " . ADMIN_EMAIL);
-        else mail($email, $subject, $content, "From: " . ADMIN_EMAIL);
     }
 }

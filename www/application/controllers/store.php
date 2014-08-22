@@ -112,16 +112,26 @@ class Store extends CI_Controller {
      */
     public function getPassword()
     {
+        $data = array();
+
         # did the user input an email yet?
         $email = $this->input->post('email');
 
-        if (verify_email($email)) {
+        if (verifyEmail($email)) {
             $user = $this->store_m->getUserByEmail($email);
             if (!empty($user)) {
                 # send the account info, show the confirmation
+                $this->storeemail->accountInfo($user->email, $user->password);
                 $data['email_sent'] = true;
+                $data['email'] = $email;
+            } else {
+                # could not find that email, return it to the UI
+                $data['not_found'] = true;
+                $data['email'] = $email;
             }
         }
+
+        $this->renderUI("get_password", $data);
     }
 
     /**
