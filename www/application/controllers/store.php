@@ -45,6 +45,16 @@ class Store extends CI_Controller {
     }
 
     /**
+     * [paypal displays a generic thank you for paying money instead of getting the item for free]
+     * @return [type] [description]
+     * @todo process the cart, log the user in, etc
+     */
+    public function paypal()
+    {
+        $this->renderUI("paypal");
+    }
+
+    /**
      * [customers redirects back to login if not logged in, otherwise to the customer section]
      * @return [void]
      */

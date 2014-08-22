@@ -48,6 +48,7 @@ $route['freePurchase'] = "store/freePurchase";
 $route['logout'] = "store/logout";
 $route['login'] = "store/login";
 $route['getPassword'] = "store/getPassword";
+$route['paypal'] = "store/paypal";
 $route['404_override'] = 'store';
 
 
