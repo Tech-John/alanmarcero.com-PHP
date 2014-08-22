@@ -49,6 +49,7 @@ $route['logout'] = "store/logout";
 $route['login'] = "store/login";
 $route['getPassword'] = "store/getPassword";
 $route['paypal'] = "store/paypal";
+$route['ipn'] = "store/ipn";
 $route['404_override'] = 'store';
 
 

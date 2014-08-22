@@ -293,6 +293,34 @@ class Store extends CI_Controller {
     }
 
     /**
+     * [ipn processes PayPal's end-of-sale API for notifying the app of a store transaction
+     *     ipn stands for instant payment notification
+     *     this is initiated asynchronously by PayPal after a sale
+     *     an implementation of paypal's 'classic api']
+     * @return [void]
+     */
+    public function ipn()
+    {
+        # get the item IDs that have been purchased
+        $item_ids = array();
+        $num_cart_items = (int) $this->input->post('num_cart_items');
+        for($i = 1; $i <= $num_cart_items; $i++) {
+            $item_ids[] = $this->input->post('item_number' . $i);
+        }
+
+        # get the user's email
+        $email = $this->input->post('payer_email');
+
+        # create or get the user
+        $user = $this->store_m->createUser($email);
+
+        # purchase each item
+        foreach ($item_ids as $item_id) {
+            $this->store_m->purchaseItem($user->id, $item_id);
+        }
+    }
+
+    /**
      *
      * PRIVATE METHODS
      *
