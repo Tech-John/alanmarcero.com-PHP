@@ -3,14 +3,14 @@
 <head>
 
 <title>--- Alan Marcero  &middot;  Web Programmer  &middot;  Music Producer ---</title>
-<link rel="stylesheet" href="/assets/css/main.css" media="screen" type="text/css" />
+<link rel="stylesheet" href="assets/css/main.css" media="screen" type="text/css" />
 
 </head>
 
 <body>
 <div id="banner">
     <div id="bannerContent">
-        <a href="/"><img src="/images/me.png" /></a>
+        <a href="/"><img src="images/me.png" /></a>
     </div>
 </div> <!-- end banner -->
 
