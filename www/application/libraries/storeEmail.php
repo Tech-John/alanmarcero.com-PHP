@@ -17,8 +17,10 @@ class StoreEmail
         $this->CI =& get_instance();
 
         # load the email helper and set the sender
+        # set the 'from' to a no-reply so gmail doesn't show the 'unverified sender' warning
         $this->CI->load->library('email');
-        $this->CI->email->from(ADMIN_EMAIL, 'Alan Marcero');
+        $this->CI->email->from('no-reply@alanmarcero.com', 'Alan Marcero');
+        $this->CI->email->reply_to(ADMIN_EMAIL, 'Alan Marcero');
     }
 
     /**
