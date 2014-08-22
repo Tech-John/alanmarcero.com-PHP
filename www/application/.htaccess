@@ -6,18 +6,11 @@ DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
 
-    # activate URL rewriting
     RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /index.php?$1 [L]
 
-
-    # do not rewrite links to the documentation, assets and public files
-    RewriteCond $1 !^(images|assets|uploads|captcha)
-
-    # do not rewrite for php files in the document root, robots.txt or the maintenance page
-    RewriteCond $1 !^([^\..]+\.php|robots\.txt|maintenance\.html)
-
-    # but rewrite everything else
-    RewriteRule ^(.*)$ index.php?/$1 [L]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
