@@ -17,7 +17,7 @@ class Store extends CI_Controller {
 
         # start the session if not available
         $this->load->library('session');
-        $this->load->library('storeemail');
+        $this->load->library('StoreEmail');
         $sess = $this->session->sess_read();
         if (empty($sess)) {
             $this->session->sess_create();
