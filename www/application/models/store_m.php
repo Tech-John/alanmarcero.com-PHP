@@ -50,7 +50,8 @@ class Store_m extends CI_Model
     {
         $query = "SELECT * FROM {$this->tbl['purchases']} ORDER BY created_at DESC LIMIT 1";
         $result = $this->db->query($query);
-        return $result->result_object()[0];
+        $obj = $result->result_object();
+        return $obj[0];
     }
 
     /**
