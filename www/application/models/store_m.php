@@ -223,7 +223,6 @@ class Store_m extends CI_Model
         }
     }
 
-
     /**
      * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
      * @param  [int/string] $user_id  [the user_id this item is being tied to, required]
