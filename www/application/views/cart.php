@@ -29,7 +29,7 @@
 
 
 	<p>&nbsp;</p>
-	<h2 class="textCenter"><a href="/" />Return to Store</a></h2>
+	<h2 class="textCenter"><a href="/" />Return to the Store</a></h2>
 	<hr />
 		<div id="subtotal">
 			<h1>Subtotal: $<?php echo $subtotal; ?> USD</h1>
