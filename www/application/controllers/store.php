@@ -325,8 +325,8 @@ class Store extends CI_Controller {
         # send the purchase confirm email
         $this->storeemail->purchaseConfirm(
             $purchased_items,
-            $u->email,
-            $u->password
+            $user->email,
+            $user->password
         );
     }
 
