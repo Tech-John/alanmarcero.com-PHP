@@ -212,8 +212,6 @@ class Store extends CI_Controller {
                 # typecase to int for comparison
                 if ((int)$id === (int)$remove_this_id) {
                     unset($cart[$remove_this_id]);
-                } else {
-                    echo $id . " " . $remove_this_id;
                 }
             }
 
