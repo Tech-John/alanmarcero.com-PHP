@@ -299,12 +299,13 @@ class Store extends CI_Controller {
      */
     public function ipn()
     {
-        # get the item IDs that have been purchased
+        # get the item info for what has been purchased
         $item_ids = array();
         $num_cart_items = (int) $this->input->post('num_cart_items');
         for($i = 1; $i <= $num_cart_items; $i++) {
             $item_ids[] = $this->input->post('item_number' . $i);
         }
+        $purchased_items = $this->store_m->getStoreEntries($item_ids);
 
         # get the user's email
         $email = $this->input->post('payer_email');
@@ -316,6 +317,13 @@ class Store extends CI_Controller {
         foreach ($item_ids as $item_id) {
             $this->store_m->purchaseItem($user->id, $item_id);
         }
+
+        # send the purchase confirm email
+        $this->storeemail->purchaseConfirm(
+            $purchased_items,
+            $u->email,
+            $u->password
+        );
     }
 
     /**
