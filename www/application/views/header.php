@@ -24,6 +24,9 @@
             <?php if (!empty($email)) {
                 echo '<li style="text-align:right"><a href="/logout" />Logout</a></li>';
             } ?>
+            <?php if (!empty($cart)) {
+                echo '<li style="text-align:right"><a href="/showCart" />View Cart (' . count($cart) . ')</a></li>';
+            } ?>
         </ul>
     </div>
 </div>

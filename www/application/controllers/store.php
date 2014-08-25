@@ -404,6 +404,9 @@ class Store extends CI_Controller {
             $data['email'] = false;
         }
 
+        # get the cart
+        $data['cart'] = $this->session->userdata('cart');
+
         # set our data and load the header
         $this->load->view('header', $data);
     }
