@@ -51,6 +51,10 @@ class Store extends CI_Controller {
      */
     public function paypal()
     {
+        # users are returned here after purchasing.  if there is a cart, clear it
+        # the cart is processed in the ipn method
+        $this->session->set_userdata(array('cart' => false));
+
         $this->renderUI("paypal");
     }
 
