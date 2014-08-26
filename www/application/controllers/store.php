@@ -45,17 +45,76 @@ class Store extends CI_Controller {
     }
 
     /**
-     * [paypal displays a generic thank you for paying money instead of getting the item for free]
-     * @return [type] [description]
-     * @todo process the cart, log the user in, etc
+     * [paypal where the user is sent after completing a PayPal purchase
+     *     initates a cURL request to PayPal in order to authenticate the response
+     *     and receive the purchase details.
+     *
+     *     IPN will create the user, purchase the items, and email
+     *     create the user and purchase the items here as well, but send no email
+     *
+     *     we want IPN to still process so there is no risk of redirect issues
+     *     resulting in a failed purchase.  process the purchase info here so the user
+     *     is logged in and can download after returning from paypal
+     *
+     *     for the purchase, the session cart is processed.  this may not be 100% accurate
+     *     as it might be possible for our session to be destroyed as part of the paypal
+     *     purchase, but the IPN will for sure process the purchase, this is just for
+     *     a seamless UX.  Using the purchaseSessionCart method for simplicity]
+     * @return [void]
      */
     public function paypal()
     {
-        # users are returned here after purchasing.  if there is a cart, clear it
-        # the cart is processed in the ipn method
-        $this->session->set_userdata(array('cart' => false));
+        $tx_token = $this->input->get('tx');
+        $auth_token = "_q65lGYIktQWvivbYm6oArwDtn2LZOBntQob4IVKb6S_8EVUn88WZJYp5PW";
+        $request = "cmd=_notify-synch&tx={$tx_token}&at={$auth_token}";
 
-        $this->renderUI("paypal");
+        # setup the cURL request to get the user's email
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://www.paypal.com/cgi-bin/webscr");
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Host: www.paypal.com"));
+
+        # send the request and close the cURL
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        # data for the response
+        $data = array();
+
+        if (strtolower($response) !== "fail" && !empty($response)) {
+            # process the response
+            $response_array = explode("\n", $response);
+            $response_assoc = array();
+            foreach ($response_array as $val) {
+                $line_data = explode("=", $val);
+                $response_assoc[urldecode($line_data[0])] = urldecode($line_data[1]);
+            }
+
+            # all we need is the email
+            $email = $response_assoc['payer_email'];
+
+            # create and get the user
+            $user = $this->store_m->createUser($email);
+
+            # login
+            $this->session->set_userdata(
+               array('user_id' => $user->id, 'email' => $user->email, 'password' => $user->password)
+            );
+
+            # create a copy of the cart for the UI
+            $data['cart'] = $this->session->userdata('cart');
+
+            # purchase items
+            $this->purchaseSessionCart();
+        } else {
+            # do nothing
+        }
+
+        $this->renderUI("paypal", $data);
     }
 
     /**
@@ -339,9 +398,9 @@ class Store extends CI_Controller {
     /**
      * [purchaseSessionCart goes through the session cart and purchases each item
      *     REQUIRED: the user is logged in with an email]
-     * @return [bool] [description]
+     * @return [void]
      */
-    private function purchaseSessionCart()
+    private function purchaseSessionCart($send_email = true)
     {
         # get the data we need
         $cart = $this->session->userdata('cart');
@@ -359,8 +418,6 @@ class Store extends CI_Controller {
 
         # empty the cart
         $this->session->set_userdata(array('cart' => false));
-
-        return true;
     }
 
     /**
