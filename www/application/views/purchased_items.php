@@ -1,4 +1,4 @@
-<p>If you encounter a problem while downloading an item, you may contact me at <a href="mailto:{$admin_email}"><?php echo $admin_email; ?></a>.</p>
+<p>If you encounter a problem while downloading an item, you may contact me at <a href="mailto:<?php echo $admin_email; ?>"><?php echo $admin_email; ?></a>.</p>
 
 <?php
     foreach ($items as $item) {
