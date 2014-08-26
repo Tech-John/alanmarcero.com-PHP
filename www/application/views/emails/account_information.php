@@ -1,4 +1,4 @@
-Below is your alanmarcero.com account information to be used to download your purchased items.
+Below is your alanmarcero.com account information for use when downloading your purchased items.
 
 Your login email: <?php echo $email . "\r\n"; ?>
 Your login password: <?php echo $password . "\r\n"; ?>
