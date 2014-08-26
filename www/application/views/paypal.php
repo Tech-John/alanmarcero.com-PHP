@@ -3,10 +3,6 @@
     Any questions may be sent directly to: <a href="mailto:<?php echo ADMIN_EMAIL; ?>"><?php echo ADMIN_EMAIL; ?></a>
 </p>
 
-<p>
-    <strong>If you encounter any issues, simply re-purchase the item(s) at a price of "0.00".</strong>
-</p>
-
 <?php
     if (!empty($cart)) {
 ?>
