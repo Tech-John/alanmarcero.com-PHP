@@ -249,7 +249,6 @@ class Store extends CI_Controller {
     {
         $data['cart'] = $this->session->userdata('cart');
         $data['subtotal'] = $this->calculateCartTotal();
-        $data['dev_mode'] = DEV_MODE;
         $data['admin_email'] = ADMIN_EMAIL;
 
         # show the cart
