@@ -1,7 +1,5 @@
 Thank you for your recent order from AlanMarcero.com
 
-Thank you for purchasing:
-
 <?php
     foreach ($items as $item) {
         echo "Item: {$item->name}" . "\r\n";
