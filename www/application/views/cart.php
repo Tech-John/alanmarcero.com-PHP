@@ -39,7 +39,7 @@
     				echo '<form action="https://www.paypal.com/cgi-bin/webscr/" method="POST">';
             ?>
 					<input type="hidden" name="cmd" value="_cart">
-					<input type="hidden" name="business" value="<?php echo $admin_email; ?>">
+					<input type="hidden" name="business" value="<?php echo ADMIN_EMAIL ?>">
 					<input type="hidden" name="item_name" value="Item Name">
 					<input type="hidden" name="currency_code" value="USD">
 					<input type="hidden" name="amount" value="<?php echo $subtotal; ?>">
