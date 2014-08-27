@@ -82,8 +82,8 @@ class Store extends CI_Controller {
         $response = curl_exec($curl);
         curl_close($curl);
 
-        # data for the response
-        $data = array();
+        # create a copy of the cart for the UI
+        $data = array('cart' => $this->session->userdata('cart'));
 
         if (strtolower($response) !== "fail" && !empty($response)) {
             # process the response
@@ -104,9 +104,6 @@ class Store extends CI_Controller {
             $this->session->set_userdata(
                array('user_id' => $user->id, 'email' => $user->email, 'password' => $user->password)
             );
-
-            # create a copy of the cart for the UI
-            $data['cart'] = $this->session->userdata('cart');
 
             # purchase items
             $this->purchaseSessionCart();
