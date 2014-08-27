@@ -15,7 +15,7 @@
         ?>
     </ul>
     <hr />
-    Total Paid: $0.00
+    Total Paid: <?php echo $subtotal; ?>
     <p>&nbsp;</p>
     <strong>You may download your items in the <a href="/customers">Customer's Section</a></strong>
 

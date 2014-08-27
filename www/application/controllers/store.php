@@ -84,6 +84,7 @@ class Store extends CI_Controller {
 
         # create a copy of the cart for the UI
         $data = array('cart' => $this->session->userdata('cart'));
+        $data['subtotal'] = $this->calculateCartTotal();
 
         if (strtolower($response) !== "fail" && !empty($response)) {
             # process the response
