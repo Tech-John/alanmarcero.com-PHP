@@ -6,7 +6,7 @@
 <?php
     if (!empty($cart)) {
 ?>
-    <h2>You have purchased the following item<?php if (count($cart) > 1) echo "s";?>:</h2>
+    <h2>Thank you for purchasing:</h2>
     <ul>
         <?php
             foreach ($cart as $id => $item) {

@@ -1,6 +1,6 @@
 Thank you for your recent order from AlanMarcero.com
 
-You have purchased the following items:
+Thank you for purchasing:
 
 <?php
     foreach ($items as $item) {

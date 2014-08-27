@@ -1,7 +1,7 @@
 <?php
     # only print cart info if we have a cart
     if (!empty($cart)) {
-        echo "<h2>Thank you for purchasing the following items:</h2>";
+        echo "<h2>Thank you for purchasing:</h2>";
         echo "<ul>";
 
         # print out each item
