@@ -28,20 +28,13 @@
  * By default development will show errors but testing and live will hide them.
  */
 
-if (defined('ENVIRONMENT'))
-{
-	switch (ENVIRONMENT)
-	{
-		case 'development':
-			error_reporting(E_ALL);
-		break;
-		case 'testing':
-		case 'production':
-		default:
-			error_reporting(0);
-	}
+# need to put this here, can't use the CONST since this is ran first
+$dev_mode = strtolower($_SERVER["HTTP_HOST"]) === "amdev" ? true : false;
+if ($dev_mode) {
+    error_reporting(E_ALL);
+} else {
+    error_reporting(0);
 }
-
 /*
  *---------------------------------------------------------------
  * SYSTEM FOLDER NAME
