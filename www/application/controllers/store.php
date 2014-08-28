@@ -359,6 +359,7 @@ class Store extends CI_Controller {
     {
         if (!($this->input->post('num_cart_items'))) {
            # this is not a store transaction, ignore it
+           return false;
         }
 
         # get the item info for what has been purchased
