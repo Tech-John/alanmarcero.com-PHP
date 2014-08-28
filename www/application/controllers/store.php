@@ -357,9 +357,8 @@ class Store extends CI_Controller {
      */
     public function ipn()
     {
-        if (empty($this->input->post('num_cart_items'))) {
+        if (!($this->input->post('num_cart_items'))) {
            # this is not a store transaction, ignore it
-           return false;
         }
 
         # get the item info for what has been purchased
