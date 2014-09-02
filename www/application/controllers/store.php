@@ -167,8 +167,9 @@ class Store extends CI_Controller {
                     $data['invalid_login'] = true;
                     $data['email'] = $email;
                 }
-            } elseif (!empty($email) || !empty($password)) {
+            } elseif (empty($email) || empty($password)) {
                 $data['invalid_login'] = true;
+                $data['email'] = $email;
             }
 
             # render login page unless we were redirected to /customers
