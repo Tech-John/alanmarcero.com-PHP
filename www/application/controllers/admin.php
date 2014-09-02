@@ -42,28 +42,35 @@ class Admin extends CI_Controller {
             $password = $this->input->post('password');
 
             # if info was entered, verify it and login.  else return with an 'invalid login' message
-            if (verifyEmail($email) && !empty($password)) {
-                $user = $this->store_m->verifyLogin($email, $password);
+            if (!empty($password)) {
+                $user = $this->store_m->verifyAdminLogin($admin_login, $password);
                 if (!empty($user)) {
                     # login
                     $this->session->set_userdata(
-                       array('user_id' => $user->id, 'email' => $user->email, 'password' => $user->password)
+                       array('admin_user_id' => $user->id)
                     );
                     # redirect to customers since we are now logged in
-                    redirect("/customers");
+                    redirect("/admin");
                 } else {
                     # login was invalid, return an error and sticky the email
                     $data['invalid_login'] = true;
-                    $data['email'] = $email;
+                    $data['admin_login'] = $admin_login;
                 }
-            } elseif (!empty($email) || !empty($password)) {
-                $data['invalid_login'] = true;
             }
 
             # render login page unless we were redirected to /customers
-            $this->renderUI("login", $data);
+            $this->renderUI("admin_login", $data);
         }
 	}
+
+    /**
+     * [admin shows a list of admin options to be performed]
+     * @return [type] [description]
+     */
+    public function admin()
+    {
+        die('asdf');
+    }
 
     /**
      * [isAdminLoggedIn is an admin logged in?]
