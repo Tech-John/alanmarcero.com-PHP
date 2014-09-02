@@ -186,7 +186,7 @@ class Store_m extends CI_Model
             $password = $this->db->escape($password);
         }
 
-        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = '{$email}' AND password = '{$password}'";
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email} AND password = {$password}";
 
         # select the data and return
         $result = $this->db->query($query);
@@ -213,7 +213,7 @@ class Store_m extends CI_Model
             $password = $this->db->escape($password);
         }
 
-        $query = "SELECT * FROM {$this->tbl['admins']} WHERE login = '{$login}' and password = md5('{$password}')";
+        $query = "SELECT * FROM {$this->tbl['admins']} WHERE login = {$login} and password = md5({$password})";
 
         # select the data and return
         $result = $this->db->query($query);
