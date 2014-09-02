@@ -109,8 +109,14 @@ class Admin extends CI_Controller {
         # get the cart
         $data['cart'] = $this->session->userdata('cart');
 
-        # set our data and load the header
-        $this->load->view('admin/header', $data);
+        # load the correct header if we're logged in
+
+        if ($this->isAdminLoggedIn()) {
+            $this->load->view('admin/header', $data);
+        } else {
+            $this->load->view('header', $data);
+        }
+
     }
 
     /**
