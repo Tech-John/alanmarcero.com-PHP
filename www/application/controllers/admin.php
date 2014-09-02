@@ -32,7 +32,7 @@ class Admin extends CI_Controller {
 	{
         # if the user is already logged in, redirect to customers
         if ($this->isAdminLoggedIn()) {
-            redirect("/admin");
+            redirect("/showOptions");
         } else {
             # show the login form, or process the login
             $data = array();
@@ -50,7 +50,7 @@ class Admin extends CI_Controller {
                        array('admin_user_id' => $user->id)
                     );
                     # redirect to customers since we are now logged in
-                    redirect("/admin");
+                    redirect("/showOptions");
                 } else {
                     # login was invalid, return an error and sticky the email
                     $data['invalid_login'] = true;
@@ -64,10 +64,10 @@ class Admin extends CI_Controller {
 	}
 
     /**
-     * [admin shows a list of admin options to be performed]
+     * [showOptions shows a list of admin options to be performed]
      * @return [type] [description]
      */
-    public function admin()
+    public function showOptions()
     {
         die('asdf');
     }
