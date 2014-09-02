@@ -186,7 +186,34 @@ class Store_m extends CI_Model
             $password = $this->db->escape($password);
         }
 
-        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email} AND password = {$password}";
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = '{$email}' AND password = '{$password}'";
+
+        # select the data and return
+        $result = $this->db->query($query);
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * [verifyAdminLogin description]
+     * @param  [type] $login    [description]
+     * @param  [type] $password [description]
+     * @return [type]           [description]
+     */
+    public function verifyAdminLogin($login, $password)
+    {
+        if (empty($login) || empty($password)) {
+            return false;
+        } else {
+            # santiize our inputs
+            $login = $this->db->escape($login);
+            $password = $this->db->escape($password);
+        }
+
+        $query = "SELECT * FROM {$this->tbl['admins']} WHERE login = '{$login}' and password = md5('{$password}')";
 
         # select the data and return
         $result = $this->db->query($query);
