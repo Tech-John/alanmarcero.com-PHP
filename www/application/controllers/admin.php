@@ -73,6 +73,42 @@ class Admin extends CI_Controller {
     }
 
     /**
+     * [dbMaintenance runs a set of queries to remove stranded and test records from the db tables]
+     * @return [type] [description]
+     */
+    public function dbMaintenance()
+    {
+        # redirect if not logged in
+        if (!$this->isAdminLoggedIn()) {
+            redirect("/");
+        }
+    }
+
+    /**
+     * [stats gets the data required to output a series of charts, graphs, and statistics]
+     * @return [array] [an array of arrays that contains the necessary data in the required format]
+     */
+    public function stats()
+    {
+        # redirect if not logged in
+        if (!$this->isAdminLoggedIn()) {
+            redirect("/");
+        }
+    }
+
+    /**
+     * [sendPromoEmail used when sending a promo email to all receipients]
+     * @return [type] [description]
+     */
+    public function sendPromoEmail()
+    {
+        # redirect if not logged in
+        if (!$this->isAdminLoggedIn()) {
+            redirect("/");
+        }
+    }
+
+    /**
      * [isAdminLoggedIn is an admin logged in?]
      * @return bool [true if an admin is logged in, false if not]
      */
