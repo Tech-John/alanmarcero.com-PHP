@@ -32,7 +32,7 @@ class Admin extends CI_Controller {
 	{
         # if the user is already logged in, redirect to customers
         if ($this->isAdminLoggedIn()) {
-            redirect("/showOptions");
+            redirect("/admin/home");
         } else {
             # show the login form, or process the login
             $data = array();
@@ -50,7 +50,7 @@ class Admin extends CI_Controller {
                        array('admin_user_id' => $user->id)
                     );
                     # redirect to customers since we are now logged in
-                    redirect("/showOptions");
+                    redirect("/admin/home");
                 } else {
                     # login was invalid, return an error and sticky the email
                     $data['invalid_login'] = true;
@@ -59,17 +59,17 @@ class Admin extends CI_Controller {
             }
 
             # render login page unless we were redirected to /customers
-            $this->renderUI("admin_login", $data);
+            $this->renderUI("login", $data);
         }
 	}
 
     /**
-     * [showOptions shows a list of admin options to be performed]
+     * [admin/home shows a list of admin options to be performed]
      * @return [type] [description]
      */
-    public function showOptions()
+    public function home()
     {
-        die('asdf');
+        $this->renderUI("home");
     }
 
     /**
@@ -101,16 +101,16 @@ class Admin extends CI_Controller {
 
         # get the email
         if ($this->isAdminLoggedIn()) {
-            $data['email'] = $this->session->userdata('email');
+            $data['admin_user_id'] = $this->session->userdata('admin_user_id');
         } else {
-            $data['email'] = false;
+            $data['admin_user_id'] = false;
         }
 
         # get the cart
         $data['cart'] = $this->session->userdata('cart');
 
         # set our data and load the header
-        $this->load->view('header', $data);
+        $this->load->view('admin/header', $data);
     }
 
     /**
@@ -135,7 +135,7 @@ class Admin extends CI_Controller {
         }
 
         $this->loadHeader();
-        $this->load->view($content_name, $data);
+        $this->load->view('admin/' . $content_name, $data);
         $this->loadFooter();
     }
 }
