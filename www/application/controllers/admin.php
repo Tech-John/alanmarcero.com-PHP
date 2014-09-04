@@ -82,6 +82,11 @@ class Admin extends CI_Controller {
         if (!$this->isAdminLoggedIn()) {
             redirect("/");
         }
+
+        # it's just a button that says "perform maintenance", has it been pressed?
+        if ($this->input->post('do_maintenance')) {
+
+        }
     }
 
     /**
