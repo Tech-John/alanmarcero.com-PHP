@@ -128,17 +128,21 @@ class Store_m extends CI_Model
         }
 
         # first make sure the user isn't already in the system
-        $query = "SELECT * FROM customers WHERE email = {$email} LIMIT 1";
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email} LIMIT 1";
         $result = $this->db->query($query);
         if ($result->num_rows() > 0) {
             return $result->row();
         } else {
             # create the user
-            $query = "INSERT INTO customers SET email = {$email}, password = '" . generateRandPassword(6) . "'";
+            $query = "INSERT INTO {$this->tbl['customers']} SET email = {$email}, password = '" . generateRandPassword(6) . "'";
+            $result = $this->db->query($query);
+
+            # add this email to the list of promo emails
+            $query = "INSERT INTO {$this->tbl['promo_emails']} SET email = {$email}";
             $result = $this->db->query($query);
 
             # return the created user
-            $query = "SELECT * FROM customers WHERE email = {$email} LIMIT 1";
+            $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email} LIMIT 1";
             $result = $this->db->query($query);
             return $result->row();
         }
@@ -304,4 +308,32 @@ class Store_m extends CI_Model
         $result = $this->db->query($query);
         return $result->result_object();
     }
+
+    /**
+     * [removeStrandedPurchases removes records in the purchases table that are tied to un-known customer IDs]
+     * @return [type] [description]
+     */
+    public function removeStrandedPurchases()
+    {
+
+    }
+
+    /**
+     * [removeTestAccounts deletes all customers with an email like '%marcero%']
+     * @return [type] [description]
+     */
+    public function removeTestAccounts()
+    {
+
+    }
+
+    /**
+     * [removeDuplicatePromoEmails description]
+     * @return [type] [description]
+     */
+    public function removeDuplicatePromoEmails()
+    {
+
+    }
+
 }
