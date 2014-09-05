@@ -316,12 +316,12 @@ class Store_m extends CI_Model
     public function removeStrandedPurchases()
     {
         # how many records will we be deleting?
-        $query = "SELECT * FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']})";
+        $query = "SELECT * FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']}) LIMIT 5";
         $result = $this->db->query($query);
         $result = $result->num_rows();
 
         # delete the records
-        $query = "DELETE FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']})";
+        $query = "DELETE FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']}) LIMIT 5";
         $this->db->query($query);
 
         return $result;
@@ -334,11 +334,11 @@ class Store_m extends CI_Model
     public function removeTestAccounts()
     {
         # how many records will we be deleting?
-        $query = "SELECT * FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%'";
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%' LIMIT 5";
         $result = $this->db->query($query)->result_object();
 
         # delete the records
-        $query = "DELETE FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%'";
+        $query = "DELETE FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%' LIMIT 5";
         $this->db->query($query);
 
         return $result;
