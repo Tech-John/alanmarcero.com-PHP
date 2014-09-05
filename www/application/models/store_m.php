@@ -103,7 +103,7 @@ class Store_m extends CI_Model
             return false;
         } else {
             # sanitize our inputs which also adds quotes
-            $this->db->escape($id);
+            $id = $this->db->escape($id);
         }
 
         $query = "SELECT name FROM {$this->tbl['store']} WHERE id = {$id} LIMIT 1";
@@ -309,7 +309,7 @@ class Store_m extends CI_Model
             return false;
         } else {
             # sanitize our inputs which also adds quotes
-            $this->db->escape($user_id);
+            $user_id = $this->db->escape($user_id);
         }
 
         # get all the items this user has purchased
