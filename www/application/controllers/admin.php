@@ -172,7 +172,6 @@ class Admin extends CI_Controller {
         } else {
             $this->load->view('header', $data);
         }
-
     }
 
     /**
