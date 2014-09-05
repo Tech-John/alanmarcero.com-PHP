@@ -150,9 +150,9 @@ class Store_m extends CI_Model
     }
 
     /**
-     * [getUserByEmail gets the DB row from the customers table for the input email]
+     * [getUserByEmail gets the DB row FROM the customers table for the input email]
      * @param  [string] $email [the email we are looking up.  required, return false if not input]
-     * @return [object/bool]        [one db row from the customers table for this user, false if not found]
+     * @return [object/bool]        [one db row FROM the customers table for this user, false if not found]
      */
     public function getUserByEmail($email)
     {
@@ -229,9 +229,9 @@ class Store_m extends CI_Model
     }
 
     /**
-     * [getUserById gets the DB row from the customers table for the input user_id]
+     * [getUserById gets the DB row FROM the customers table for the input user_id]
      * @param  [type] $user_id [the user_id we are looking up.  required, false if not input]
-     * @return [object/bool] [one db row from the customers table for this user, false if not found]
+     * @return [object/bool] [one db row FROM the customers table for this user, false if not found]
      */
     public function getUserById($user_id)
     {
@@ -302,7 +302,7 @@ class Store_m extends CI_Model
         }
 
         # get all the items this user has purchased
-        $query = "SELECT * from {$this->tbl['purchases']}
+        $query = "SELECT * FROM {$this->tbl['purchases']}
             JOIN {$this->tbl['store']} ON {$this->tbl['purchases']}.store_entry_id = {$this->tbl['store']}.id
             WHERE customer_id = {$user_id}";
         $result = $this->db->query($query);
@@ -315,7 +315,16 @@ class Store_m extends CI_Model
      */
     public function removeStrandedPurchases()
     {
+        # how many records will we be deleting?
+        $query = "SELECT * FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']})";
+        $result = $this->db->query($query);
+        $result = $result->num_rows();
 
+        # delete the records
+        $query = "DELETE FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']})";
+        $this->db->query($query);
+
+        return $result;
     }
 
     /**
@@ -324,16 +333,14 @@ class Store_m extends CI_Model
      */
     public function removeTestAccounts()
     {
+        # how many records will we be deleting?
+        $query = "SELECT * FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%'";
+        $result = $this->db->query($query)->result_object();
 
+        # delete the records
+        $query = "DELETE FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%'";
+        $this->db->query($query);
+
+        return $result;
     }
-
-    /**
-     * [removeDuplicatePromoEmails description]
-     * @return [type] [description]
-     */
-    public function removeDuplicatePromoEmails()
-    {
-
-    }
-
 }

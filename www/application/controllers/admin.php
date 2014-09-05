@@ -83,10 +83,26 @@ class Admin extends CI_Controller {
             redirect("/");
         }
 
-        # it's just a button that says "perform maintenance", has it been pressed?
+        # it's just a button that says "do maintenance", has it been pressed?
+        $data = array();
         if ($this->input->post('do_maintenance')) {
+            # remove test accounts that have 'marcero' in the email
+            $data['test_accounts_before'] = $this->store_m->removeTestAccounts();
 
+            # remove purchased items for missing customers (should just be the deleted test accounts)
+            $data['stranded_purchases_before'] = $this->store_m->removeStrandedPurchases();
+
+            # remove test accounts that have 'marcero' in the email
+            $data['test_accounts_after'] = $this->store_m->removeTestAccounts();
+
+            # remove purchased items for missing customers (should just be the deleted test accounts)
+            $data['stranded_purchases_after'] = $this->store_m->removeStrandedPurchases();
+
+            # set to true so we show the maintenance results
+            $data['maintenance_performed'] = true;
         }
+
+        $this->renderUI('db_maintenance', $data);
     }
 
     /**
