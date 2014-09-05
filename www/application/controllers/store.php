@@ -410,8 +410,8 @@ class Store extends CI_Controller {
         }
 
         # purchase each item
-        foreach ($cart as $item_id => $name) {
-            $this->store_m->purchaseItem($user_id, $item_id);
+        foreach ($cart as $item_id => $item) {
+            $this->store_m->purchaseItem($user_id, $item_id, $item['price']);
         }
 
         # empty the cart

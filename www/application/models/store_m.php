@@ -256,9 +256,10 @@ class Store_m extends CI_Model
      * [purchaseItem adds a record for the input user_id and item_id to the purchased_items table to be 'purchased']
      * @param  [int/string] $user_id  [the user_id this item is being tied to, required]
      * @param  [int/string] $item_id  [the item_id that the user is purchasing, required]
+     * @param  [float]   $amount_paid   [if the user paid money, how much for this item?]
      * @return [void]
      */
-    public function purchaseItem($user_id, $item_id)
+    public function purchaseItem($user_id, $item_id, $amount_paid = 0.00)
     {
         if (empty($user_id) || empty($item_id)) {
             return false;
@@ -266,6 +267,14 @@ class Store_m extends CI_Model
             # sanitize our inputs which also adds quotes
             $user_id = $this->db->escape($user_id);
             $item_id = $this->db->escape($item_id);
+            $amount_paid = $this->db->escape($amount_paid);
+
+            # was it free? - escape() adds quotes
+            if ($amount_paid === "'0.00'") {
+                $free_purchase = 'true';
+            } else {
+                $free_purchase = 'false';
+            }
         }
 
         # first see if this item has already been purchased
@@ -274,15 +283,18 @@ class Store_m extends CI_Model
         $result = $this->db->query($query);
         $already_purchased = $result->num_rows();
 
+        # if it's already purhcased, update.  else insert
         if ($already_purchased) {
             # just update the date
-            $query = "UPDATE {$this->tbl['purchases']} SET created_at = now()
+            $query = "UPDATE {$this->tbl['purchases']} SET created_at = now(),
+                free_purchase = {$free_purchase}, amount_paid = {$amount_paid}
                 WHERE customer_id = {$user_id} AND store_entry_id = {$item_id} LIMIT 1";
             $this->db->query($query);
         } else {
             # not already purchased, purchase it
             $query = "INSERT INTO {$this->tbl['purchases']}
-                SET created_at = now(), customer_id = {$user_id}, store_entry_id = {$item_id}";
+                SET created_at = now(), customer_id = {$user_id}, store_entry_id = {$item_id},
+                free_purchase = {$free_purchase}, amount_paid = {$amount_paid}";
             $this->db->query($query);
         }
     }
