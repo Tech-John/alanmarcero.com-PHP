@@ -263,17 +263,17 @@ class Store_m extends CI_Model
         if (empty($user_id) || empty($item_id)) {
             return false;
         } else {
-            # sanitize our inputs which also adds quotes
-            $user_id = $this->db->escape($user_id);
-            $item_id = $this->db->escape($item_id);
-            $amount_paid = $this->db->escape($amount_paid);
-
-            # was it free? - escape() adds quotes
-            if ($amount_paid === "'0.00'") {
+            # was it free? - do before escape() which adds quotes
+            if ($amount_paid === "0.00") {
                 $free_purchase = 'true';
             } else {
                 $free_purchase = 'false';
             }
+
+            # sanitize our inputs which also adds quotes
+            $user_id = $this->db->escape($user_id);
+            $item_id = $this->db->escape($item_id);
+            $amount_paid = $this->db->escape($amount_paid);
         }
 
         # first see if this item has already been purchased
