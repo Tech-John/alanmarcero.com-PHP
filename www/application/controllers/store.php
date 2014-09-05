@@ -362,9 +362,12 @@ class Store extends CI_Controller {
 
         # get the item info for what has been purchased
         $item_ids = array();
+        $cart = array();
         $num_cart_items = (int) $this->input->post('num_cart_items');
         for($i = 1; $i <= $num_cart_items; $i++) {
             $item_ids[] = $this->input->post('item_number' . $i);
+            $cart[] = array('item_id' => $this->input->post('item_number' . $i),
+                'price' => $this->input->post('mc_gross_' . $i));
         }
         $purchased_items = $this->store_m->getStoreEntries($item_ids);
 
@@ -375,8 +378,8 @@ class Store extends CI_Controller {
         $user = $this->store_m->createUser($email);
 
         # purchase each item
-        foreach ($item_ids as $item_id) {
-            $this->store_m->purchaseItem($user->id, $item_id);
+        foreach ($cart as $item) {
+            $this->store_m->purchaseItem($user->id, $item['item_id'], $item['price']);
         }
 
         # send the purchase confirm email
