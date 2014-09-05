@@ -356,6 +356,23 @@ class Store_m extends CI_Model
     }
 
     /**
+     * [removeTestPromos deletes all promo email records with an email like '%marcero%']
+     * @return [type] [description]
+     */
+    public function removeTestPromos()
+    {
+        # how many records will we be deleting?
+        $query = "SELECT * FROM {$this->tbl['promo_emails']} WHERE {$this->tbl['promo_emails']}.email LIKE '%marcero%' LIMIT 5";
+        $result = $this->db->query($query)->result_object();
+
+        # delete the records
+        $query = "DELETE FROM {$this->tbl['promo_emails']} WHERE {$this->tbl['promo_emails']}.email LIKE '%marcero%' LIMIT 5";
+        $this->db->query($query);
+
+        return $result;
+    }
+
+    /**
      * [subscribeToPromos if the email is valid and not already in the promos table, it is added and true is returned
      *     else, false is returned
      *     the email msut already be valid and escaped, which is why the method is kept private]

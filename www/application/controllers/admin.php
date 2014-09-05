@@ -98,6 +98,12 @@ class Admin extends CI_Controller {
             # remove purchased items for missing customers (should just be the deleted test accounts)
             $data['stranded_purchases_after'] = $this->store_m->removeStrandedPurchases();
 
+            # remove promo email records for test users
+            $data['promo_emails_before'] = $this->store_m->removeTestPromos();
+
+            # removed promo email records for test users
+            $data['promo_emails_after'] = $this->store_m->removeTestPromos();
+
             # set to true so we show the maintenance results
             $data['maintenance_performed'] = true;
         }
