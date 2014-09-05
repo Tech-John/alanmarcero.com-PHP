@@ -138,8 +138,7 @@ class Store_m extends CI_Model
             $result = $this->db->query($query);
 
             # add this email to the list of promo emails
-            $query = "INSERT INTO {$this->tbl['promo_emails']} SET email = {$email}";
-            $result = $this->db->query($query);
+            $this->subscribeToPromos($email);
 
             # return the created user
             $query = "SELECT * FROM {$this->tbl['customers']} WHERE email = {$email} LIMIT 1";
@@ -354,5 +353,28 @@ class Store_m extends CI_Model
         $this->db->query($query);
 
         return $result;
+    }
+
+    /**
+     * [subscribeToPromos if the email is valid and not already in the promos table, it is added and true is returned
+     *     else, false is returned
+     *     the email msut already be valid and escaped, which is why the method is kept private]
+     * @param  [type] $email [the email we are adding to the promos table]
+     * @return [bool]        [true if the email was added, false if the email was invalid or already in the promos table]
+     */
+    private function subscribeToPromos($email)
+    {
+        # is the email already in the db?
+        $query = "SELECT * FROM {$this->tbl['promo_emails']} WHERE email = {$email}";
+        $email_count = $this->db->query($query)->num_rows();
+
+        # if it is not in the db, insert.  else return false
+        if (!$email_count) {
+            $query = "INSERT INTO {$this->tbl['promo_emails']} SET email = {$email}";
+            $result = $this->db->query($query);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
