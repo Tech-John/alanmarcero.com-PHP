@@ -134,9 +134,6 @@ class Admin extends CI_Controller {
             redirect("/");
         }
 
-        # need the library
-        $this->load->library('StoreEmail');
-
         # are we sending a test email?
         $test_mode = $this->input->post('test_mode') ? true : false;
 
