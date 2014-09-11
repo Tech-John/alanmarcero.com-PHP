@@ -133,6 +133,8 @@ class Admin extends CI_Controller {
         if (!$this->isAdminLoggedIn()) {
             redirect("/");
         }
+
+        $this->store_m->getPromoEmails();
     }
 
     /**

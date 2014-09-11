@@ -373,6 +373,25 @@ class Store_m extends CI_Model
     }
 
     /**
+     * [getPromoEmails returns a single dimension array of all promo emails]
+     * @return [array] [array of emails]
+     */
+    public function getPromoEmails()
+    {
+        # get the emails
+        $query = "SELECT email FROM {$this->tbl['promo_emails']}";
+        $result = $this->db->query($query)->result_array();
+
+        # make into a single dimension
+        $emails = array();
+        foreach ($result as $row) {
+            $emails[] = $row['email'];
+        }
+
+        return $emails;
+    }
+
+    /**
      * [subscribeToPromos if the email is valid and not already in the promos table, it is added and true is returned
      *     else, false is returned
      *     the email msut already be valid and escaped, which is why the method is kept private]
