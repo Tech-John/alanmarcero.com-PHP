@@ -158,7 +158,7 @@ class Admin extends CI_Controller {
                 $bccs_per_email = 50;
                 $recipient_count = count($emails);
                 $recipients_sent = 0;
-                $email_count = round($recipient_count / $bccs_per_email);
+                $email_count = ceil($recipient_count / $bccs_per_email);
                 $emails_sent = 0;
                 for ($i=0; $i!=$email_count; $i++) {
                     # for every 50 emails in our array, create an array of those 50 emails for sending
