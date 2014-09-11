@@ -134,7 +134,60 @@ class Admin extends CI_Controller {
             redirect("/");
         }
 
-        $this->store_m->getPromoEmails();
+        # need the library
+        $this->load->library('StoreEmail');
+
+        # are we sending a test email?
+        $test_mode = $this->input->post('test_mode') ? true : false;
+
+        # get the ascii, non-html, content for the email
+        $content = $this->input->post('content');
+
+        # if content has been specified, we're sending an email
+        $data = array();
+        if (!empty($content)) {
+            # send the email only to ADMIN if test, otherwise send to all
+            if ($test_mode) {
+                $this->storeemail->promoEmail(array(ADMIN_EMAIL), $content);
+            } else {
+                # get all the email addresses we will be sending to
+                #$emails = $this->store_m->getPromoEmails();
+                $emails = array(ADMIN_EMAIL);
+
+                # server allows only 1,000 email sends per day.  break up our recipients into groups of 50
+                $bccs_per_email = 50;
+                $recipient_count = count($emails);
+                $recipients_sent = 0;
+                $email_count = round($recipient_count / $bccs_per_email);
+                $emails_sent = 0;
+                for ($i=0; $i!=$email_count; $i++) {
+                    # for every 50 emails in our array, create an array of those 50 emails for sending
+                    $batch_of_emails = array();
+                    for ($j=0; ($j!=$bccs_per_email && (($i * $bccs_per_email) + $j) < count($emails)); $j++) {
+                        $batch_of_emails[] = $emails[($i * $bccs_per_email) + $j];
+                        $recipients_sent++;
+                    }
+                    $this->storeemail->promoEmail($batch_of_emails, $content);
+                    $emails_sent++;
+                }
+
+                # return the data we want back to the UI
+                $data['recipients_sent'] = $recipients_sent;
+                $data['emails_sent'] = $emails_sent;
+            }
+
+            # we sent either a prod or dev email, output the info in the UI
+            $data['email_sent'] = true;
+        } else {
+            # we didn't send anything because the content was not specified
+            $data['email_sent'] = false;
+        }
+
+        # are we in test mode?
+        $data['test_mode'] = $test_mode;
+
+        # render the UI
+        $this->renderUI('promo_email', $data);
     }
 
     /**

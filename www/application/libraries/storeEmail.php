@@ -82,6 +82,7 @@ class StoreEmail
         $subject = "Your AlanMarcero.com Account Information";
         $this->CI->email->subject($subject);
 
+        # set the message content
         $content = $this->CI->load->view('/emails/account_information', $data, true);
         $this->CI->email->message($content);
 
@@ -92,6 +93,32 @@ class StoreEmail
         } else {
             # send to the input email
             $this->CI->email->to($email);
+        }
+
+        # send the message
+        $this->CI->email->send();
+    }
+
+    public function promoEmail($emails, $content)
+    {
+        $data = array('content' => $content);
+
+        # set the subject
+        $subject = "AlanMarcero.com New Product Notification";
+        $this->CI->email->subject($subject);
+
+        # set the message content
+        $content = $this->CI->load->view('/emails/promo_email', $data, true);
+        $this->CI->email->message($content);
+
+        # set the recipient
+        $this->CI->email->to(ADMIN_EMAIL);
+        if (DEV_MODE) {
+            # set the BCC to only the admin email
+            $this->CI->email->bcc(ADMIN_EMAIL);
+        } else {
+            # set the BCC to all emails input
+            #$this->CI->email->bcc($emails);
         }
 
         # send the message
