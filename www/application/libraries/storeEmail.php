@@ -124,14 +124,4 @@ class StoreEmail
         # send the message
         #$this->CI->email->send();
     }
-
-    /**
-     * [optOut description]
-     * @param  [type] $email [description]
-     * @return [type]        [description]
-     */
-    public function optOut($email)
-    {
-        $subject = "AlanMarcero.com Product Notification Opt-Out";
-    }
 }
