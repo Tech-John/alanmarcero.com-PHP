@@ -17,7 +17,7 @@
 <div id="nav">
     <div id="navContent">
         <ul>
-            <li><a href="/">Sound Design</li>
+            <li><a href="/">Sound Design</li></a>
             <li><a href="/customers">Customer's Section</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="http://www.youtube.com/AlanMarcero">YouTube</a></li>
