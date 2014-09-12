@@ -148,8 +148,7 @@ class Admin extends CI_Controller {
                 $this->storeemail->promoEmail(array(ADMIN_EMAIL), $content);
             } else {
                 # get all the email addresses we will be sending to
-                #$emails = $this->store_m->getPromoEmails();
-                $emails = array(ADMIN_EMAIL);
+                $emails = $this->store_m->getPromoEmails();
 
                 # server allows only 1,000 email sends per day.  break up our recipients into groups of 50
                 $bccs_per_email = 50;

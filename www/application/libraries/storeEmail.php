@@ -122,7 +122,7 @@ class StoreEmail
         }
 
         # send the message
-        $this->CI->email->send();
+        #$this->CI->email->send();
     }
 
     /**
