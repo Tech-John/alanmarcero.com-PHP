@@ -392,6 +392,34 @@ class Store_m extends CI_Model
     }
 
     /**
+     * [removePromoEmail removes the input promo email from the promo email table]
+     * @param  [type] $email [the email we want to remove]
+     * @return [bool]        [true if the email was found and removed, false if the email was not found or not input]
+     */
+    public function removePromoEmail($email)
+    {
+        if (empty($email)) {
+            return false;
+        } else {
+            # santiize our input
+            $email = $this->db->escape($email);
+        }
+
+        # does the email exist?
+        $find_query = "SELECT * FROM {$this->tbl['promo_emails']} WHERE email = {$email}";
+        $find_result = $this->db->query($find_query)->result_array();
+        if (!count($find_result)) {
+            return false;
+        } else {
+            # we found the email, remove it.  the email field is unique, we can limit to 1 for safety
+            $delete_query = "DELETE FROM {$this->tbl['promo_emails']} WHERE email = {$email} LIMIT 1";
+            $this->db->query($delete_query);
+            return true;
+        }
+
+    }
+
+    /**
      * [subscribeToPromos if the email is valid and not already in the promos table, it is added and true is returned
      *     else, false is returned
      *     the email msut already be valid and escaped, which is why the method is kept private]

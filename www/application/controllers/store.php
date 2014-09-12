@@ -391,6 +391,32 @@ class Store extends CI_Controller {
     }
 
     /**
+     * [optOut used to remove the input email from the promo email table]
+     * @return [bool] [true if the email was found and removed, false if the email was not found]
+     */
+    public function optOut()
+    {
+        # return data
+        $data = array();
+
+        # was an email input?
+        $email = $this->input->post('email');
+        $data['email'] = $email;
+        if (verifyEmail($email)) {
+            # we received a valid input, try to remove it and return the result to the UI
+            $email_removed = $this->store_m->removePromoEmail($email);
+            $data['email_removed'] = $email_removed;
+        } elseif(!empty($email)) {
+            # an invalid email was entered
+            $data['invalid'] = true;
+        } else {
+            # nothing was entered
+        }
+
+        $this->renderUI("optout", $data);
+    }
+
+    /**
      *
      * PRIVATE METHODS
      *

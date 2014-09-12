@@ -50,6 +50,8 @@ $route['login'] = "store/login";
 $route['getPassword'] = "store/getPassword";
 $route['paypal'] = "store/paypal";
 $route['ipn'] = "store/ipn";
+$route['optOut'] = "store/optOut";
+$route['optout'] = "store/OptOut"; # both cases to be sure users can get here
 $route['404_override'] = 'store';
 
 
