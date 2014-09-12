@@ -4,7 +4,7 @@
         if ($test_mode) {
             echo "test mode to " . ADMIN_EMAIL . ".</p>";
         } else {
-            echo "production mode to " . $recipients_sent . " recipients in " . $emails_sent . " emails.</p>";
+            echo "production mode to " . number_format($recipients_sent) . " recipients in " . number_format($emails_sent) . " emails.</p>";
         }
     }
 ?>

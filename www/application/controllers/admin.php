@@ -150,7 +150,7 @@ class Admin extends CI_Controller {
                 # get all the email addresses we will be sending to
                 $emails = $this->store_m->getPromoEmails();
 
-                # server allows only 1,000 email sends per day.  break up our recipients into groups of 50
+                # server allows only 1,000 email sends per day.  break up our recipients into groups
                 $bccs_per_email = 50;
                 $recipient_count = count($emails);
                 $recipients_sent = 0;
