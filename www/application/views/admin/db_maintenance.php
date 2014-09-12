@@ -34,7 +34,7 @@
         foreach ($promo_emails_before as $email) {
             echo $email->email . "<br />";
         }
-        if (!count($test_accounts_before)) {
+        if (!count($promo_emails_before)) {
             echo "(None)<br />";
         }
 
