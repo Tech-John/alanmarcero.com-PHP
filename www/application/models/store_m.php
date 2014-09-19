@@ -419,6 +419,60 @@ class Store_m extends CI_Model
 
     }
 
+    public function stats_SalesCountsSinceLastRelease()
+    {
+        $query = "SELECT count(*), {$this->tbl['store']}.name FROM {$this->tbl['purchases']}
+            JOIN {$this->tbl['store']} ON {$this->tbl['purchases']}.store_entry_id = {$this->tbl['store']}.id
+            WHERE {$this->tbl['purchases']}.created_at >=
+                (SELECT max({$this->tbl['store']}.first_sale) FROM {$this->tbl['store']})
+            GROUP BY store_entry_id ORDER BY count(*) DESC";
+    }
+
+    public function stats_PercentFreePurchases()
+    {
+        $query = "SELECT (sum(free_purchase) /
+            (SELECT count(*) FROM $this->tbl['purchases']} WHERE free_purchase IS NOT NULL)) * 100
+            FROM $this->tbl['purchases']}";
+    }
+
+    public function stats_AvgPricePaid()
+    {
+        $query = "SELECT avg(amount_paid)
+            FROM $this->tbl['purchases']}
+            WHERE amount_paid > 0";
+    }
+
+    public function stats_AvgPricePaidByItem()
+    {
+        $query = "SELECT round(avg(amount_paid), 2) AS avg_paid, name
+            FROM {$this->tbl['purchases']}
+            JOIN {$this->tbl['store']} ON {$this->tbl['store']}.id = {$this->tbl['purchases']}.store_entry_id
+            WHERE amount_paid > 0 GROUP BY {$this->tbl['purchases']}.store_entry_id";
+    }
+
+    public function stats_TotalIncomeByItem()
+    {
+        $query = "SELECT round(sum(amount_paid), 2) AS avg_paid, name
+            FROM {$this->tbl['purchases']}
+            JOIN {$this->tbl['store']} ON {$this->tbl['store']}.id = {$this->tbl['purchases']}.store_entry_id
+            WHERE amount_paid > 0 GROUP BY {$this->tbl['purchases']}.store_entry_id";
+    }
+
+    public function stats_TotalPurchasesByMonth()
+    {
+        $query = "SELECT count(*) AS purchases, left(created_at, 7) AS month
+            FROM {$this->tbl['purchases']}
+            GROUP BY month ORDER BY month";
+    }
+
+    public function stats_TotalIncomeByMonth()
+    {
+        $query = "SELECT sum(amount_paid) AS total_income, left(created_at, 7) AS month
+            FROM {$this->tbl['purchases']}
+            WHERE amount_paid IS NOT NULL
+            GROUP BY month ORDER BY month";
+    }
+
     /**
      * [subscribeToPromos if the email is valid and not already in the promos table, it is added and true is returned
      *     else, false is returned
