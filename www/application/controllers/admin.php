@@ -87,22 +87,22 @@ class Admin extends CI_Controller {
         $data = array();
         if ($this->input->post('do_maintenance')) {
             # remove test accounts that have 'marcero' in the email
-            $data['test_accounts_before'] = $this->admin_m->removeTestAccounts();
+            $data['test_accounts_before'] = $this->admin_m->remove_TestAccounts();
 
             # remove purchased items for missing customers (should just be the deleted test accounts)
-            $data['stranded_purchases_before'] = $this->admin_m->removeStrandedPurchases();
+            $data['stranded_purchases_before'] = $this->admin_m->remove_StrandedPurchases();
 
             # remove test accounts that have 'marcero' in the email
-            $data['test_accounts_after'] = $this->admin_m->removeTestAccounts();
+            $data['test_accounts_after'] = $this->admin_m->remove_TestAccounts();
 
             # remove purchased items for missing customers (should just be the deleted test accounts)
-            $data['stranded_purchases_after'] = $this->admin_m->removeStrandedPurchases();
+            $data['stranded_purchases_after'] = $this->admin_m->remove_StrandedPurchases();
 
             # remove promo email records for test users
-            $data['promo_emails_before'] = $this->admin_m->removeTestPromos();
+            $data['promo_emails_before'] = $this->admin_m->remove_TestPromos();
 
             # removed promo email records for test users
-            $data['promo_emails_after'] = $this->admin_m->removeTestPromos();
+            $data['promo_emails_after'] = $this->admin_m->remove_TestPromos();
 
             # set to true so we show the maintenance results
             $data['maintenance_performed'] = true;

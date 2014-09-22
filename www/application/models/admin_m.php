@@ -55,7 +55,7 @@ class Admin_m extends CI_Model
      * [removeStrandedPurchases removes records in the purchases table that are tied to un-known customer IDs]
      * @return [type] [description]
      */
-    public function removeStrandedPurchases()
+    public function remove_StrandedPurchases()
     {
         # how many records will we be deleting?
         $query = "SELECT * FROM {$this->tbl['purchases']} WHERE {$this->tbl['purchases']}.customer_id NOT IN (SELECT id from {$this->tbl['customers']}) LIMIT 5";
@@ -73,7 +73,7 @@ class Admin_m extends CI_Model
      * [removeTestAccounts deletes all customers with an email like '%marcero%']
      * @return [type] [description]
      */
-    public function removeTestAccounts()
+    public function remove_TestAccounts()
     {
         # how many records will we be deleting?
         $query = "SELECT * FROM {$this->tbl['customers']} WHERE {$this->tbl['customers']}.email LIKE '%marcero%' LIMIT 5";
@@ -90,7 +90,7 @@ class Admin_m extends CI_Model
      * [removeTestPromos deletes all promo email records with an email like '%marcero%']
      * @return [type] [description]
      */
-    public function removeTestPromos()
+    public function remove_TestPromos()
     {
         # how many records will we be deleting?
         $query = "SELECT * FROM {$this->tbl['promo_emails']} WHERE {$this->tbl['promo_emails']}.email LIKE '%marcero%' LIMIT 5";
@@ -101,25 +101,6 @@ class Admin_m extends CI_Model
         $this->db->query($query);
 
         return $result;
-    }
-
-    /**
-     * [getPromoEmails returns a single dimension array of all promo emails]
-     * @return [array] [array of emails]
-     */
-    public function getPromoEmails()
-    {
-        # get the emails
-        $query = "SELECT email FROM {$this->tbl['promo_emails']}";
-        $result = $this->db->query($query)->result_array();
-
-        # make into a single dimension
-        $emails = array();
-        foreach ($result as $row) {
-            $emails[] = $row['email'];
-        }
-
-        return $emails;
     }
 
     /**
@@ -226,25 +207,21 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [subscribeToPromos if the email is valid and not already in the promos table, it is added and true is returned
-     *     else, false is returned
-     *     the email msut already be valid and escaped, which is why the method is kept private]
-     * @param  [type] $email [the email we are adding to the promos table]
-     * @return [bool]        [true if the email was added, false if the email was invalid or already in the promos table]
+     * [getPromoEmails returns a single dimension array of all promo emails]
+     * @return [array] [array of emails]
      */
-    private function subscribeToPromos($email)
+    public function getPromoEmails()
     {
-        # is the email already in the db?
-        $query = "SELECT * FROM {$this->tbl['promo_emails']} WHERE email = {$email}";
-        $email_count = $this->db->query($query)->num_rows();
+        # get the emails
+        $query = "SELECT email FROM {$this->tbl['promo_emails']}";
+        $result = $this->db->query($query)->result_array();
 
-        # if it is not in the db, insert.  else return false
-        if (!$email_count) {
-            $query = "INSERT INTO {$this->tbl['promo_emails']} SET email = {$email}";
-            $result = $this->db->query($query);
-            return true;
-        } else {
-            return false;
+        # make into a single dimension
+        $emails = array();
+        foreach ($result as $row) {
+            $emails[] = $row['email'];
         }
+
+        return $emails;
     }
 }
