@@ -104,7 +104,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_SalesCountsSinceLastRelease description]
+     * [stats_SalesCountsSinceLastRelease how many of each store item has sold since the last item was added.]
      * @return [object] [result object]
      */
     public function stats_SalesCountsSinceLastRelease()
@@ -120,7 +120,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_PercentFreePurchases description]
+     * [stats_PercentFreePurchases what is the percent of purchases that were free?]
      * @return [object] [result object]
      */
     public function stats_PercentFreePurchases()
@@ -134,7 +134,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_AvgPricePaid description]
+     * [stats_AvgPricePaid what is the average price paid across all items, when the customer chose to pay?]
      * @return [object] [result object]
      */
     public function stats_AvgPricePaid()
@@ -148,7 +148,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_AvgPricePaidByItem description]
+     * [stats_AvgPricePaidByItem What is the average price paid for each item?]
      * @return [object] [result object]
      */
     public function stats_AvgPricePaidByItem()
@@ -163,7 +163,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_TotalIncomeByItem description]
+     * [stats_TotalIncomeByItem How much money has each item brought in across all known data?]
      * @return [object] [result object]
      */
     public function stats_TotalIncomeByItem()
@@ -178,7 +178,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_TotalPurchasesByMonth description]
+     * [stats_TotalPurchasesByMonth How many purchases were made each month?]
      * @return [object] [result object]
      */
     public function stats_TotalPurchasesByMonth()
@@ -192,7 +192,7 @@ class Admin_m extends CI_Model
     }
 
     /**
-     * [stats_TotalIncomeByMonth description]
+     * [stats_TotalIncomeByMonth How much money has been brought in, broken out by month?]
      * @return [object] [result object]
      */
     public function stats_TotalIncomeByMonth()
