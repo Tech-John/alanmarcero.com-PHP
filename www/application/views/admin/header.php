@@ -30,14 +30,7 @@
 
 <div id="sectionHeading">
     <div id="sectionHeadingText">
-        <div id="cart">
-            <?php echo $customer_count; ?> people have purchased <?php echo $purchased_count; ?> patch banks :: Last purchase <?php echo $last_purchase; ?>
-        </div>
-        <div id="loggedIn">
-            <?php if (!empty($email)) {
-                echo "Logged in with email: {$email}";
-            } ?>
-        </div>
+
     </div>
 </div>
 

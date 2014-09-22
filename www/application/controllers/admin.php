@@ -13,7 +13,7 @@ class Admin extends CI_Controller {
         # load dependencies
         $this->load->helper('store_helper');
         $this->load->helper('url');
-        $this->load->model('store_m');
+        $this->load->model('admin_m');
 
         # start the session if not available
         $this->load->library('session');
@@ -43,7 +43,7 @@ class Admin extends CI_Controller {
 
             # if info was entered, verify it and login.  else return with an 'invalid login' message
             if (!empty($password)) {
-                $user = $this->store_m->verifyAdminLogin($admin_login, $password);
+                $user = $this->admin_m->verifyAdminLogin($admin_login, $password);
                 if (!empty($user)) {
                     # login
                     $this->session->set_userdata(
@@ -87,22 +87,22 @@ class Admin extends CI_Controller {
         $data = array();
         if ($this->input->post('do_maintenance')) {
             # remove test accounts that have 'marcero' in the email
-            $data['test_accounts_before'] = $this->store_m->removeTestAccounts();
+            $data['test_accounts_before'] = $this->admin_m->removeTestAccounts();
 
             # remove purchased items for missing customers (should just be the deleted test accounts)
-            $data['stranded_purchases_before'] = $this->store_m->removeStrandedPurchases();
+            $data['stranded_purchases_before'] = $this->admin_m->removeStrandedPurchases();
 
             # remove test accounts that have 'marcero' in the email
-            $data['test_accounts_after'] = $this->store_m->removeTestAccounts();
+            $data['test_accounts_after'] = $this->admin_m->removeTestAccounts();
 
             # remove purchased items for missing customers (should just be the deleted test accounts)
-            $data['stranded_purchases_after'] = $this->store_m->removeStrandedPurchases();
+            $data['stranded_purchases_after'] = $this->admin_m->removeStrandedPurchases();
 
             # remove promo email records for test users
-            $data['promo_emails_before'] = $this->store_m->removeTestPromos();
+            $data['promo_emails_before'] = $this->admin_m->removeTestPromos();
 
             # removed promo email records for test users
-            $data['promo_emails_after'] = $this->store_m->removeTestPromos();
+            $data['promo_emails_after'] = $this->admin_m->removeTestPromos();
 
             # set to true so we show the maintenance results
             $data['maintenance_performed'] = true;
@@ -121,6 +121,18 @@ class Admin extends CI_Controller {
         if (!$this->isAdminLoggedIn()) {
             redirect("/");
         }
+
+        # get all the data
+        $data = array();
+        $data['sales_counts'] = $this->admin_m->stats_SalesCountsSinceLastRelease();
+        $data['percent_free'] = $this->admin_m->stats_PercentFreePurchases();
+        $data['avg_paid'] = $this->admin_m->stats_AvgPricePaid();
+        $data['avg_paid_by_item'] = $this->admin_m->stats_AvgPricePaidByItem();
+        $data['total_income_by_item'] = $this->admin_m->stats_TotalIncomeByItem();
+        $data['total_purchases_by_month'] = $this->admin_m->stats_TotalPurchasesByMonth();
+        $data['total_income_by_month'] = $this->admin_m->stats_TotalIncomeByMonth();
+
+        ex($data);
     }
 
     /**
@@ -148,7 +160,7 @@ class Admin extends CI_Controller {
                 $this->storeemail->promoEmail(array(ADMIN_EMAIL), $content);
             } else {
                 # get all the email addresses we will be sending to
-                $emails = $this->store_m->getPromoEmails();
+                $emails = $this->admin_m->getPromoEmails();
 
                 # server allows only 1,000 email sends per day.  break up our recipients into groups
                 $bccs_per_email = 50;
@@ -205,18 +217,21 @@ class Admin extends CI_Controller {
         # data to pass to the view
         $data = array();
 
-        # get header counts
-        $data['customer_count'] = $this->store_m->getCustomerCount();
-        $data['purchased_count'] = $this->store_m->getPurchasedCount();
-
-        # get last purchased
-        $item = $this->store_m->getLastPurchased();
-        $data['last_purchase'] = prettyTime(strtotime($item->created_at));
-
         # get the email
         if ($this->isAdminLoggedIn()) {
             $data['admin_user_id'] = $this->session->userdata('admin_user_id');
         } else {
+            # going to need the store model now
+            $this->load->model('store_m');
+
+            # get header counts
+            $data['customer_count'] = $this->store_m->getCustomerCount();
+            $data['purchased_count'] = $this->store_m->getPurchasedCount();
+
+            # get last purchased
+            $item = $this->store_m->getLastPurchased();
+            $data['last_purchase'] = prettyTime(strtotime($item->created_at));
+
             $data['admin_user_id'] = false;
         }
 
