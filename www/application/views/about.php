@@ -14,7 +14,7 @@ me to make my patches available here rather than keep'em all for me greedy self!
 <p>
 Second, since you're purchasing a completely digital item, one I will not physically deliver, the trade off is that you will
 always have access to downloading the patch bank through this website.  If at some point in the future you lose the bank, or want
-to download an update (more on that later), sign in to the <a href="/customers">Customer's Section</a> with your email address
+to download an update (more on that later), sign in to the <a href="./customers">Customer's Section</a> with your email address
 and password and your previously purchased items are there waiting.
 </p>
 <p>

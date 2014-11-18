@@ -23,10 +23,10 @@
             <li><a href="http://www.youtube.com/AlanMarcero">YouTube</a></li>
             <li><a href="http://www.soundcloud.com/AlanMarcero">SoundCloud</a></li>
             <?php if (!empty($email)) {
-                echo '<li style="text-align:right"><a href="/logout" />Logout</a></li>';
+                echo '<li style="text-align:right"><a href="./logout" />Logout</a></li>';
             } ?>
             <?php if (!empty($cart)) {
-                echo '<li style="text-align:right"><a href="/showCart" />View Cart (' . count($cart) . ')</a></li>';
+                echo '<li style="text-align:right"><a href="./showCart" />View Cart (' . count($cart) . ')</a></li>';
             } ?>
         </ul>
     </div>

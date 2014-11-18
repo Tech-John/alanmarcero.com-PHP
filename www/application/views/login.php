@@ -15,7 +15,7 @@
         <p>
             <label>Password: <br /></label>
             <input type="password" name="password" class="textField" /><br />
-            <small><a href="/getPassword">Can't Remember Your Password?</a></small>
+            <small><a href="./getPassword">Can't Remember Your Password?</a></small>
         </p>
 
         <p>
