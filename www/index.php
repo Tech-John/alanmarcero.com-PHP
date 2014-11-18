@@ -1,5 +1,4 @@
 <?php
-
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -29,7 +28,7 @@
  */
 
 # need to put this here, can't use the CONST since this is ran first
-$dev_mode = strtolower($_SERVER["HTTP_HOST"]) === "amdev" ? true : false;
+$dev_mode = strtolower($_SERVER["HTTP_HOST"]) === "localhost" ? true : false;
 if ($dev_mode) {
     error_reporting(E_ALL);
 } else {
