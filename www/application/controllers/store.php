@@ -342,7 +342,9 @@ class Store extends CI_Controller {
      */
     public function logout()
     {
-        $this->session->sess_create();
+        $this->session->set_userdata(
+            array('user_id' => '', 'email' => '', 'password' => '')
+        );
         redirect("/");
     }
 
