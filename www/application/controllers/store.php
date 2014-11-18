@@ -212,7 +212,7 @@ class Store extends CI_Controller {
         $item_id = $this->input->post('item_id');
         $price = $this->input->post('price');
         $name = $this->store_m->getItemNameById($item_id); // get from DB rather than POST
-        $price = money_format("%i", $price);
+        $price = myMoneyFormat($price);
 
         # if we have an item id, proceed.  else show the cart
         if (!empty($item_id)) {
@@ -463,7 +463,7 @@ class Store extends CI_Controller {
             }
         }
 
-        return money_format("%i", $subtotal);
+        return myMoneyFormat($subtotal);
     }
 
     /**

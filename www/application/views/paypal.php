@@ -17,6 +17,6 @@
     <hr />
     Total Paid: $<?php echo $subtotal; ?> USD
     <p>&nbsp;</p>
-    <strong>You may download your items in the <a href="/customers">Customer's Section</a></strong>
+    <strong>You may download your items in the <a href="./customers">Customer's Section</a></strong>
 
 <?php } # end if !empty($cart) ?>

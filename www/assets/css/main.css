@@ -9,11 +9,11 @@ body {
 /*------------------- divs  -------------------*/
 
 #banner {
-	background: url(/images/banner.jpg) repeat;
+	background: url(../../images/banner.jpg) repeat;
 }
 
 #bannerContent {
-	background: url(/images/banner.jpg) repeat;
+	background: url(../../images/banner.jpg) repeat;
 	width:850px;
 	height:75px;
 	padding: 6px 15px 0px 15px;
@@ -25,18 +25,18 @@ body {
 }
 
 #nav{
-	background: url(/images/nav.jpg) repeat;
+	background: url(../../images/nav.jpg) repeat;
 }
 
 #navContent {
-	background: url(/images/nav.jpg) repeat;
+	background: url(../../images/nav.jpg) repeat;
 	width:850px;
 	margin: 0px auto 0px auto;
 	text-align:center;
 	padding: 4px 15px 4px 15px;
 }
 
-#nav ul { 
+#nav ul {
 	margin:0px;
 }
 
@@ -44,7 +44,7 @@ body {
 	display:inline;
 	margin-right:20px;
 }
-	
+
 #nav li a {
 	font-size:14px;
 	color:#E8F6F8;
@@ -52,18 +52,18 @@ body {
 	font-weight:normal;
 }
 
-#nav a:hover{ 
+#nav a:hover{
 	color: #73B9CB;
 	text-decoration:none;
 }
 
 
 #sectionHeading {
-	background: url(/images/section_heading.jpg) repeat;
+	background: url(../../images/section_heading.jpg) repeat;
 }
 
 #sectionHeadingText {
-	background: url(/images/section_heading.jpg) repeat;
+	background: url(../../images/section_heading.jpg) repeat;
 	width:850px;
 	margin: 0px auto 0px auto;
 	padding:8px 15px 5px 15px;
@@ -72,12 +72,12 @@ body {
 
 
 #sectionContent {
-	background: url(/images/section_content.jpg) repeat-x;
+	background: url(../../images/section_content.jpg) repeat-x;
 	height:600px;
 }
 
 #sectionContentText {
-	background: url(/images/section_content.jpg) repeat-x;
+	background: url(../../images/section_content.jpg) repeat-x;
 	width:850px;
 	height:auto;
 	margin: 0px auto 0px auto;
@@ -95,7 +95,7 @@ body {
 }
 
 #subscribing {
-	position:absolute; 
+	position:absolute;
 	margin: 5px 0px 0px 15px;
 }
 
@@ -107,7 +107,7 @@ body {
 	text-align:right;
 	margin: 0px 20px 0px auto;
 }
-	
+
 
 .textCenter {
 	text-align:center;
@@ -226,7 +226,7 @@ legend {
 .buttonSubmit {
 	color:#FFF;
 	padding:2px 5px;
-	background:url(/images/button.gif) repeat;
+	background:url(../../images/button.gif) repeat;
 	cursor:pointer;
 	border:#438391 1px solid;
 }
@@ -234,7 +234,7 @@ legend {
 
 .textField {
 	font-family: "Lucida Grande", arial, helvetica, sans-serif;
-	background: #E8F6F8 url(/images/text.jpg) repeat-x;
+	background: #E8F6F8 url(../../images/text.jpg) repeat-x;
 	border:#73B9CB 1px double;
 	padding:5px;
 }

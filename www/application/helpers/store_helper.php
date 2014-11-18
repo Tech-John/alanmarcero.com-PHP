@@ -70,3 +70,15 @@
     {
         die("<pre>" . print_r($array, true) . "</pre>");
     }
+
+
+    /**
+     * [money_format money_format doesn't work on windows systems]
+     * @param  [type] $format
+     * @param  [type] $number
+     * @return [type]
+     */
+    function myMoneyFormat($number)
+    {
+        return number_format($number, 2);
+    }

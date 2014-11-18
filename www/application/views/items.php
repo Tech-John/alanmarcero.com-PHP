@@ -1,7 +1,7 @@
 <?php foreach ($items as $item) { ?>
 
     <h2><?php echo $item->name ?></h2>
-    <img src="<?php echo $item->image_url ?>" class='styleRight' />
+    <img src="<?php echo "./" . $item->image_url ?>" class='styleRight' />
     <?php echo $item->content ?>
 
     <div class="clearLeft">
@@ -12,7 +12,7 @@
     </div>
 
     <?php if ($item->for_sale) { ?>
-        <form action = '/addToCart' method = "POST">
+        <form action = './addToCart' method = "POST">
             <div class="addToCart">
                 <p style="margin:0px;">
                     $<input type="text" class="textField" name='price' value="25.00" size='3'/>

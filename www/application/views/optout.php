@@ -9,7 +9,7 @@
     <p>Your email address, <?php echo $email; ?>, will no longer receive new product notifications.</p>
 <?php } else { ?>
     <p>To be removed from <a href="http://www.alanmarcero.com">AlanMarcero.com</a> new product notifications, please enter your email address below:</p>
-    <form action="optOut" method="POST" />
+    <form action="./optOut" method="POST" />
         <p>
             <input type="text" name="email" class="textField" value="<?php echo $email; ?>" />
             <input type="submit" value="Remove" class="buttonSubmit" />

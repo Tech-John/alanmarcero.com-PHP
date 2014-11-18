@@ -10,16 +10,16 @@
 <body>
 <div id="banner">
     <div id="bannerContent">
-        <a href="/"><img src="images/me.png" /></a>
+        <a href="./"><img src="images/me.png" /></a>
     </div>
 </div> <!-- end banner -->
 
 <div id="nav">
     <div id="navContent">
         <ul>
-            <li><a href="/">Sound Design</a></li>
-            <li><a href="/customers">Customer's Section</a></li>
-            <li><a href="/about">About</a></li>
+            <li><a href="./">Sound Design</a></li>
+            <li><a href="./customers">Customer's Section</a></li>
+            <li><a href="./about">About</a></li>
             <li><a href="http://www.youtube.com/AlanMarcero">YouTube</a></li>
             <li><a href="http://www.soundcloud.com/AlanMarcero">SoundCloud</a></li>
             <?php if (!empty($email)) {

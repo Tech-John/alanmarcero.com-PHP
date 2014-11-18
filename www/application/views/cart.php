@@ -4,7 +4,7 @@
 			<tr>
 				<td><?php echo $item['name']; ?></td>
 				<td>
-					<form action="/addToCart" method="POST">
+					<form action="./addToCart" method="POST">
 						<input type="hidden" name="item_id" value="<?php echo $id; ?>" />
 						<?php
                             if ($item['price'] === 0.00 || !$item['price']) {
@@ -18,7 +18,7 @@
 				</td>
 				<td>$<?php if ($item['price']) echo $item['price']; else echo '0.00'; ?></td>
 				<td>
-                    <form action="/removeFromCart" method="POST" />
+                    <form action="./removeFromCart" method="POST" />
                         <input type="hidden" name="item_id" value="<?php echo $id; ?>">
                         <input type="submit" class="buttonSubmit" value="Remove Item" />
                     </form>
@@ -57,7 +57,7 @@
 					<input type="submit" value="Proceed to PayPal" />
 				</form>
 			<?php } else { ?>
-				<form action="/freePurchase" method="POST" />
+				<form action="./freePurchase" method="POST" />
 					<input type="submit" value="Purchase Items" />
 				</form>
 			<?php } ?>

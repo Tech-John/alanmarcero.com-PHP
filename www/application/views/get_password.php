@@ -1,4 +1,4 @@
-<form action = '/getPassword' method = "POST">
+<form action = './getPassword' method = "POST">
 	<?php
         if (isset($not_found)) {
             echo "I could not find the email you entered: {$email}";

@@ -2,7 +2,7 @@
 	<p>To complete your purchase, you must first sign up for an account.
 	Signing up is very simple!  Just enter your valid email address below:</p>
 
-	<form action="freePurchase" method="POST" />
+	<form action="./freePurchase" method="POST" />
 		<p>
 			<label>Email:<br /></label>
 			<input type="text" name="email" class="textField" />
@@ -21,5 +21,5 @@
 	<hr />
 	Total Paid: $0.00
 	<p>&nbsp;</p>
-	<strong>You may download your items in the <a href="/customers">Customer's Section</a></strong>
+	<strong>You may download your items in the <a href="./customers">Customer's Section</a></strong>
 <?php } ?>

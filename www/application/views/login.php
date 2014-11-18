@@ -6,7 +6,7 @@
     ?>
     <legend>AlanMarcero.com Account</legend>
 
-    <form action="/login" method="POST" />
+    <form action="./login" method="POST" />
         <p>
             <label>Email:<br /></label>
             <input type="text" name="email" value='<?php if (isset($email)) echo $email; ?>'class="textField" />
