@@ -8,9 +8,9 @@
 						<input type="hidden" name="item_id" value="<?php echo $id; ?>" />
 						<?php
                             if ($item['price'] === 0.00 || !$item['price']) {
-    							echo '$<input type="text" name="price" value="25.00" class="textField" size="3" />';
+    							echo '$<input type="text" name="price" value="25.00" class="textField" size="5" />';
     						} else {
-    							echo '$<input type="text" name="price" value="' . $item['price'] . '" class="textField" size="3" />';
+    							echo '$<input type="text" name="price" value="' . $item['price'] . '" class="textField" size="5" />';
     						}
                         ?>
 						<input type="submit" class="buttonSubmit" value="Update Price" />

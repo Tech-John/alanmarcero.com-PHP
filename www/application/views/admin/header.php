@@ -17,10 +17,10 @@
 <div id="nav">
     <div id="navContent">
         <ul>
-            <li><a href="./admin">Admin Home</li>
-            <li><a href="./admin/sendPromoEmail">Send Promo Email</a></li>
-            <li><a href="./admin/stats">Graphs and Stats</a></li>
-            <li><a href="./admin/dbMaintenance">Database Maintenance</a></li>
+            <li><a href=".">Admin Home</li>
+            <li><a href="./sendPromoEmail">Send Promo Email</a></li>
+            <li><a href="./stats">Graphs and Stats</a></li>
+            <li><a href="./dbMaintenance">Database Maintenance</a></li>
             <?php if (!empty($admin_user_id)) {
                 echo '<li style="text-align:right"><a href="./logout" />Admin Logout</a></li>';
             } ?>

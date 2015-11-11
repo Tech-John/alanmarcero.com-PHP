@@ -15,7 +15,7 @@
         <form action = './addToCart' method = "POST">
             <div class="addToCart">
                 <p style="margin:0px;">
-                    $<input type="text" class="textField" name='price' value="25.00" size='3'/>
+                    $<input type="text" class="textField" name='price' value="25.00" size='5'/>
                     <input type='submit' value='Add To Cart' class='buttonSubmit' /><br />
                     <span class="priceNotice">Name your price (0.00 and up) -- 25.00 is suggested.  Price is in USD.</span>
                 </p>
@@ -26,7 +26,7 @@
         <form action = '<?php echo $item->full_item_url ?>' method = "GET">
             <div class="addToCart">
                 <p style="margin:0px;">
-                    $<input type="text" class="textField" name='price' value="0.00" size='3' disabled="true" />
+                    $<input type="text" class="textField" name='price' value="0.00" size='5' disabled="true" />
                     <input type='submit' value='Download Now!' class='buttonSubmit' /><br />
                     <span class="priceNotice">This item is only available for free.</span>
                 </p>
